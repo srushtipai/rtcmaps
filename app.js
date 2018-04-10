@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 });
 
 app.get('/', (req, res) => {
-  res.send('Inital Check');
+  res.render('landing');
 });
 
 app.listen(process.env.PORT, process.env.IP, () => {
