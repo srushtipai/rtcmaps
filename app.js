@@ -28,6 +28,10 @@ app.get('/', (req, res) => {
   res.render('landing');
 });
 
+app.get('/stuart', (req, res) => {
+  res.render('stuart');
+});
+
 app.listen(process.env.PORT, process.env.IP, () => {
   console.log('RTC map server starting.');
 });

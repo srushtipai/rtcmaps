@@ -1,3 +1,20 @@
 <% include partials/header %>
-<h1>Landing</h1>
+
+<section class="landing-head">
+  <image class="background-image" src="/images/landing.jpg"></image>
+  <div class="landing-content-area">
+    <form>
+      <h1>RTC Maps Application</h1>
+      <div class="form-group col-md-6 offset-md-3">
+        <select class="form-control" id="inputBuilding">
+          <option selected="selected">Select Building</option>
+          <option>Stuart Building</option>
+          <option>Alumini Building</option>
+        </select>
+      </div>
+      <a class="btn btn-info btn-lg" id="openMaps">Open Maps</a>
+    </form>
+  </div>
+</section>
+
 <% include partials/footer %>
