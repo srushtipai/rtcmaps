@@ -36,19 +36,6 @@ $(document).ready(function() {
     var data = e.params.data;
     renderSVG(mobile, data.text, false);
   });
-  
-  $('#room').on('select2:select', function (e) {
-    const currentPath = window.location.pathname;
-    const data = e.params.data;
-    $('#modalRoom').text(`${currentPath.charAt(1).toUpperCase() + currentPath.slice(2)} Room ${data.id.split('-')[1]}`);
-    $('#submitReport form').attr('action', `${currentPath}/${data.id.split('-')[1]}`);
-    $('#submitReport').modal({show: true});
-  });
-
-  $.get('https://crossorigin.me/https://api.darksky.net/forecast/4152be98ca71e28f0d675829b06509f9/41.838543,-87.627276?units=si').then((weather) => {
-    $('#outsideTemperature').text(`${parseInt(weather.currently.temperature, 10)} °C`);
-    $('#outsideHumidity').text(`${parseInt(weather.currently.humidity * 100, 10)}%`);
-  });
 });
 
 // Should figure out a way to do this in css
@@ -129,50 +116,7 @@ function renderSVG (mobile, svgName, initialRender) {
       const svg = d3.select('svg');
       svg.attr('width', '100%');
       svg.attr('height', !mobile ? '87vh' : '100%');
-
-      svg.selectAll('path').each(function (d, i) {
-        let room = d3.select(this).attr('id');
-        $.get(`${currentPath}/${room.split('-')[1]}`).then((room) => {
-          let higherCount = 0;
-          let hcount = 0;
-          let lcount = 0;
-          room.complaints.forEach((complaint) => {
-            if (complaint.higher) {
-              higherCount += 1;
-              hcount += 1;
-            } else {
-              higherCount -= 1;
-              lcount += 1;
-            }
-          });
-          d3.select(this).attr('data-toggle', 'tooltip');
-          d3.select(this).attr('data-html', 'true');
-          d3.select(this).attr('title', `${room.roomNumber}: <span class="badge badge-pill badge-danger"><i class="fas fa-arrow-alt-circle-up"></i></span> ${hcount} <span class="badge badge-pill badge-primary"><i class="fas fa-arrow-alt-circle-down"></i></span> ${lcount}`);
-          $(this).tooltip();
-          if (higherCount > 0) {
-            d3.select(this).style("fill-opacity", "0")
-                           .style('fill', 'blue')
-                           .transition()
-                           .duration(300)
-                           .style("fill-opacity", "0.59");
-          } else if (higherCount < 0) {
-            d3.select(this).style("fill-opacity", "0")
-                           .style('fill', 'red')
-                           .transition()
-                           .duration(300)
-                           .style("fill-opacity", "0.59");
-          } else {
-            d3.select(this).style('fill', 'none');
-          }
-        });
-      });
-      $('path').click(function(e) {
-        const room = e.target.id.split('-')[1]
-        $('#modalRoom').text(`${currentPath.charAt(1).toUpperCase() + currentPath.slice(2)} Room ${room}`);
-        $('[data-toggle="tooltip"]').tooltip('hide');
-        $('#submitReport form').attr('action', `${currentPath}/${room}`);
-        $('#submitReport').modal({show: true});
-      });
+      
       if (!initialRender) {
         $('.alert').remove();
       }
