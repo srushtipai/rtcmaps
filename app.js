@@ -32,6 +32,10 @@ app.get('/stuart', (req, res) => {
   res.render('stuart');
 });
 
+app.get('/alumini', (req, res) => {
+  res.render('alumini');
+});
+
 app.listen(process.env.PORT, process.env.IP, () => {
   console.log('RTC map server starting.');
 });
