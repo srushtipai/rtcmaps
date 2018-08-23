@@ -4,7 +4,8 @@
   "description": "Applicaiton to maintain locations in BOSSA database",
   "main": "app.js",
   "scripts": {
-    "server": "PORT=3000 node app.js"
+    "start": "node app.js",
+    "dev": "PORT=3000 node app.js"
   },
   "author": "",
   "license": "ISC",
