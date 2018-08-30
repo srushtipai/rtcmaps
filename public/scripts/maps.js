@@ -114,6 +114,10 @@ function renderSVG (mobile, svgName, initialRender) {
       $('.svgContainer').empty();
       $('.svgContainer').append(xml.documentElement);
       const svg = d3.select('svg');
+      svg.on("click", function() {
+        let coordinates = d3.mouse(this);
+        console.log(`x: ${coordinates[0]}\n y: ${coordinates[1]}`);
+      });
       svg.attr('width', '100%');
       svg.attr('height', !mobile ? '87vh' : '100%');
       
