@@ -2,7 +2,6 @@
 
 $(document).ready(function() {
   $('#floor').select2();
-  $('#room').select2({width: '100%'});
   customStyles();
 
   var meny = Meny.create({
@@ -116,7 +115,11 @@ function renderSVG (mobile, svgName, initialRender) {
       const svg = d3.select('svg');
       svg.on("click", function() {
         let coordinates = d3.mouse(this);
-        console.log(`x: ${coordinates[0]}\n y: ${coordinates[1]}`);
+        if (mobile) {
+          console.log(`x: ${inverseMapX(coordinates[0])}\n y: ${inverseMapY(coordinates[1])}`);
+        } else {
+          console.log(`x: ${parseFloat(d3.select('svg').attr('data-width'), 10) - inverseMapX(coordinates[1])}\n y: ${inverseMapY(coordinates[0])}`);
+        }
       });
       svg.attr('width', '100%');
       svg.attr('height', !mobile ? '87vh' : '100%');
@@ -173,6 +176,17 @@ function mapX (x) {
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
+function inverseMapX(svgX) {
+  const origin = d3.select('.origin').filter('path').node().getBBox();
+  const originTop = d3.select('.originTop').filter('path').node().getBBox();
+  const in_min = origin.x;
+  const in_max = originTop.x + originTop.width;
+  const out_min = 0;
+  const out_max = parseFloat(d3.select('svg').attr('data-width'), 10);
+  return (svgX - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+
 function mapY (y) {
   const origin = d3.select('.origin').filter('path').node().getBBox();
   const originTop = d3.select('.originTop').filter('path').node().getBBox();
@@ -183,6 +197,21 @@ function mapY (y) {
   return (y - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
-function setBeacon(x,y) {
-  setLocation(mapX(x), mapY(y), 100);
+function inverseMapY(svgY) {
+  const origin = d3.select('.origin').filter('path').node().getBBox();
+  const originTop = d3.select('.originTop').filter('path').node().getBBox();
+  const in_min = origin.y + origin.height;
+  const in_max = originTop.y;
+  const out_min = 0;
+  const out_max = parseFloat(d3.select('svg').attr('data-height'), 10);
+  return (svgY - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+function setBeacon(x,y, mobile) {
+  if (mobile) {
+    setLocation(mapX(x), mapY(y), 100);
+  } else {
+    const newX = mapX(parseFloat(d3.select('svg').attr('data-width'), 10)) - mapX(x);
+    setLocation(mapY(y), newX, 100);
+  }
 }
