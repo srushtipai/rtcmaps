@@ -115,7 +115,11 @@ function renderSVG (mobile, svgName, initialRender) {
       const svg = d3.select('svg');
       svg.on("click", function() {
         let coordinates = d3.mouse(this);
-        console.log(`x: ${coordinates[0]}\n y: ${coordinates[1]}`);
+        if (mobile) {
+          console.log(`x: ${inverseMapX(coordinates[0])}\n y: ${inverseMapY(coordinates[1])}`);
+        } else {
+          console.log(`x: ${parseFloat(d3.select('svg').attr('data-width'), 10) - inverseMapX(coordinates[1])}\n y: ${inverseMapY(coordinates[0])}`);
+        }
       });
       svg.attr('width', '100%');
       svg.attr('height', !mobile ? '87vh' : '100%');
