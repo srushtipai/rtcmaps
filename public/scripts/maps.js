@@ -23,13 +23,28 @@ $(document).ready(function() {
   const mobile = $(window).width() <= 500;
   renderSVG(mobile, $('#floor').select2('data')[0].text, true);
 
-  $('.sw').change(function () {
+  $('#toggle-2').change(function () {
     if ($(this).is(':checked')) {
       renderMockBeacons();
     } else {
       d3.selectAll('circle').remove();
     }
   });
+
+    $('#addmode').change(function () {
+        if ($(this).is(':checked')) {
+          d3.select('svg').on("click", function() {
+            let coordinates = d3.mouse(this);
+              if (mobile) {
+                console.log(`x: ${inverseMapX(coordinates[0])}\n y: ${inverseMapY(coordinates[1])}`);
+              } else {
+                console.log(`x: ${parseFloat(d3.select('svg').attr('data-width'), 10) - inverseMapX(coordinates[1])}\n y: ${inverseMapY(coordinates[0])}`);
+              }
+            });
+        } else {
+          d3.select('svg').on("click", null);
+        }
+    });
 
   $('#floor').on('select2:select', function (e) {
     var data = e.params.data;
@@ -113,14 +128,6 @@ function renderSVG (mobile, svgName, initialRender) {
       $('.svgContainer').empty();
       $('.svgContainer').append(xml.documentElement);
       const svg = d3.select('svg');
-      svg.on("click", function() {
-        let coordinates = d3.mouse(this);
-        if (mobile) {
-          console.log(`x: ${inverseMapX(coordinates[0])}\n y: ${inverseMapY(coordinates[1])}`);
-        } else {
-          console.log(`x: ${parseFloat(d3.select('svg').attr('data-width'), 10) - inverseMapX(coordinates[1])}\n y: ${inverseMapY(coordinates[0])}`);
-        }
-      });
       svg.attr('width', '100%');
       svg.attr('height', !mobile ? '87vh' : '100%');
       
