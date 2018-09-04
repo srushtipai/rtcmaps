@@ -70,7 +70,7 @@ function renderMockBeacons() {
   const height = parseInt(viewBox[3], 10) - 200;
   let i;
   for (i = 0; i < 10; i++) {
-    renderBeacon(getRandomNumber(200, width), getRandomNumber(100, height), Math.floor(getRandomNumber(0, 50)));
+    renderBeacon(getRandomNumber(200, width), getRandomNumber(100, height), 0, 0);
   }
 }
 
