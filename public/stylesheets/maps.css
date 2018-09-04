@@ -123,6 +123,16 @@ ul {
   cursor: pointer;
 }
 
+.alignLeft {
+  float: left;
+  margin-right: 15px;
+  margin-top: 3px;
+}
+
+.alignRight {
+  float: right;
+}
+
 input.sw {
   opacity: 0;
   position: absolute;

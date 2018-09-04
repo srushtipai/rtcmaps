@@ -23,11 +23,26 @@ $(document).ready(function() {
   const mobile = $(window).width() <= 500;
   renderSVG(mobile, $('#floor').select2('data')[0].text, true);
 
-  $('.sw').change(function () {
+  $('#toggle-2').change(function () {
     if ($(this).is(':checked')) {
       renderMockBeacons();
     } else {
       d3.selectAll('circle').remove();
+    }
+  });
+
+  $('#addmode').change(function () {
+    if ($(this).is(':checked')) {
+      d3.select('svg').on("click", function () {
+        let coordinates = d3.mouse(this);
+        if (mobile) {
+          console.log(`x: ${inverseMapX(coordinates[0])}\n y: ${inverseMapY(coordinates[1])}`);
+          renderBeacon(coordinates[0], coordinates[1], inverseMapX(coordinates[0], inverseMapY(coordinates[1])));
+        } else {
+          console.log(`x: ${parseFloat(d3.select('svg').attr('data-width'), 10) - inverseMapX(coordinates[1])}\n y: ${inverseMapY(coordinates[0])}`);
+          renderBeacon(coordinates[0], coordinates[1], parseFloat(d3.select('svg').attr('data-width'), 10) - inverseMapX(coordinates[1]), inverseMapY(coordinates[0]));
+        }
+      });
     }
   });
 
@@ -49,26 +64,17 @@ function getRandomNumber(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-function returnRGBColor(temp) {
-  let max = 50;
-  let avg = temp/max;
-  let red = Math.round(avg*255);
-  let green = avg >= 0.5 ? 1 : 0;
-  let blue = Math.round((1 - avg) * 255);
-  return `rgb(${red}, ${green}, ${blue})`;
-}
-
 function renderMockBeacons() {
   const viewBox = d3.select('svg').attr('viewBox').split(" ");
   const width = parseInt(viewBox[2], 10) - 200;
   const height = parseInt(viewBox[3], 10) - 200;
   let i;
   for (i = 0; i < 10; i++) {
-    renderBeacon(getRandomNumber(200, width), getRandomNumber(100, height), Math.floor(getRandomNumber(0, 50)));
+    renderBeacon(getRandomNumber(200, width), getRandomNumber(100, height), 0, 0);
   }
 }
 
-function renderBeacon (x, y, temp) {
+function renderBeacon (x, y, realX, realY) {
   d3.select('svg').append('circle')
                   .attr("cx", x)
                   .attr("cy", y)
@@ -79,11 +85,12 @@ function renderBeacon (x, y, temp) {
                   .attr("cy", y)
                   .attr("r", 0)
                   .attr("data-toggle", "tooltip")
-                  .attr("title", `Temperature: ${temp}°C`)
+                  .attr("title", `x: ${Number((realX).toFixed(2))} y: ${Number((realY).toFixed(2))}`)
                   .on('mouseover', function() {
                     d3.select(this).transition()
                                    .duration(300)
-                                   .attr("r", "100");
+                                   .attr("r", "100")
+
                     $(this).tooltip();
                     $(this).tooltip('show');
                   })
@@ -92,7 +99,7 @@ function renderBeacon (x, y, temp) {
                                    .duration(300)
                                    .attr("r", "50");
                   })
-                  .style("fill", returnRGBColor(temp))
+                  .style("fill", 'rgb(66, 134, 244)')
                   .style("fill-opacity", "0.6")
                   .style("stroke", "black")
                   .style("stroke-dasharray", "80, 50")
@@ -102,6 +109,7 @@ function renderBeacon (x, y, temp) {
                   .attr("r", 50)
                   .attr("transform", "rotate(180deg)");
   }
+
 
 function renderSVG (mobile, svgName, initialRender) {
   const currentPath = window.location.pathname;
@@ -113,14 +121,6 @@ function renderSVG (mobile, svgName, initialRender) {
       $('.svgContainer').empty();
       $('.svgContainer').append(xml.documentElement);
       const svg = d3.select('svg');
-      svg.on("click", function() {
-        let coordinates = d3.mouse(this);
-        if (mobile) {
-          console.log(`x: ${inverseMapX(coordinates[0])}\n y: ${inverseMapY(coordinates[1])}`);
-        } else {
-          console.log(`x: ${parseFloat(d3.select('svg').attr('data-width'), 10) - inverseMapX(coordinates[1])}\n y: ${inverseMapY(coordinates[0])}`);
-        }
-      });
       svg.attr('width', '100%');
       svg.attr('height', !mobile ? '87vh' : '100%');
       
