@@ -26,6 +26,13 @@ ul {
   padding-top: 15px;
 }
 
+.btnChange{
+  font-size: 80%;
+  border-color: black;
+  padding: 10%;
+  background-color: black;
+  margin-left: 10%;
+}
 #aluminiSvg {
   padding: 0 51px;
 }
