@@ -6,12 +6,14 @@ const session = require('express-session');
 const flash = require('connect-flash');
 
 const app = express();
+
 app.use(session({
-  secret: 'keyboard cat',
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: { maxAge: 120000 },
 }));
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(flash());
 app.set('view engine', 'ejs');
@@ -29,11 +31,43 @@ app.get('/', (req, res) => {
 });
 
 app.get('/stuart', (req, res) => {
-  res.render('stuart');
+  req.session.requestedPath = req.originalUrl;
+  if (req.session.userid !== process.env.ADMINU || req.session.password !== process.env.ADMINP) {
+    req.flash('error', 'Please login');
+    res.redirect('/login');
+  } else {
+    res.render('stuart');
+  }
 });
 
 app.get('/alumini', (req, res) => {
-  res.render('alumini');
+  req.session.requestedPath = req.originalUrl;
+  if (req.session.userid !== process.env.ADMINU || req.session.password !== process.env.ADMINP) {
+    req.flash('error', 'Please login');
+    res.redirect('/login');
+  } else {
+    res.render('alumini');
+  }
+});
+
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+
+app.post('/login', (req, res) => {
+  console.log(req.session.requestedPath);
+  if (req.body.userid !== process.env.ADMINU || req.body.password !== process.env.ADMINP) {
+    req.flash('error', 'Incorrect Password');
+    res.redirect('/login');
+  } else {
+    req.session.userid = req.body.userid;
+    req.session.password = req.body.password;
+    if (req.session.requestedPath) {
+      res.redirect(req.session.requestedPath);
+    } else {
+      res.redirect('/');
+    }
+  }
 });
 
 app.listen(process.env.PORT, process.env.IP, () => {
