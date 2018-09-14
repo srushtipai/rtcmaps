@@ -33,6 +33,14 @@ $(document).ready(function() {
     }
   });
 
+  $('#showGateways').change(function () {
+    if ($(this).is(':checked')) {
+      console.log('Showing gateways');
+    } else {
+      d3.selectAll('circle').remove();
+    }
+  });
+
   $('#addmode').change(function () {
     $('#addgateway').prop('checked', false);
     if ($('#addmode').prop('checked') == true) {
@@ -114,7 +122,8 @@ function getRandomNumber(min, max) {
 }
 
 function renderBeacons(mobile) {
-  $.get('https://api.iitrtclab.com/beacons/AM/1', (beacons) => {
+  let buildingFloor = $('#floor').select2('data')[0].text.split('-');
+  $.get(`https://api.iitrtclab.com/beacons/${buildingFloor[0]}/${buildingFloor[1]}`, (beacons) => {
     beacons.forEach((beacon) => {
       setBeacon(beacon.x, beacon.y, mobile);
     });
