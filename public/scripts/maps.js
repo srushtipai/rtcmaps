@@ -125,7 +125,7 @@ function renderBeacons(mobile) {
   let buildingFloor = $('#floor').select2('data')[0].text.split('-');
   $.get(`https://api.iitrtclab.com/beacons/${buildingFloor[0]}/${buildingFloor[1]}`, (beacons) => {
     beacons.forEach((beacon) => {
-      setBeacon(beacon.x, beacon.y, mobile);
+      setBeacon(beacon, mobile);
     });
 
     const dragHandler = d3.drag()
@@ -147,10 +147,10 @@ function renderBeacons(mobile) {
   });
 }
 
-function renderBeacon (x, y, realX, realY) {
+function renderBeacon (x, y, beacon) {
 
   var group = d3.select('svg').append('g').attr('class', 'beacons');
-
+//<button type="button" class="btn btn-primary btn-sm">Small button</button>
 
   group.append('circle')
           .attr("cx", x)
@@ -162,21 +162,31 @@ function renderBeacon (x, y, realX, realY) {
           .attr("cx", x)
           .attr("cy", y)
           .attr("r", 0)
-          .attr("data-toggle", "tooltip")
-          .attr("title", `x: ${Number((realX).toFixed(2))} y: ${Number((realY).toFixed(2))}`)
+          .attr('data-toggle', 'popover')
+          .attr('data-html', true)
+          .attr('data-content', `<div class="row"><div class="col-md-12 text-center"><strong>MAC Address:</strong> ${beacon.beacon_id}</div></div>
+            <div style="margin-top: 2px" class="row"><div class="col-md-6 text-center"><strong>x</strong>: ${Number((beacon.x).toFixed(2))}</div><div class="col-md-6 text-center"><strong>y:</strong> ${Number((beacon.y).toFixed(2))}</div></div>
+            <div style="margin-top: 4px" class="row"><div class="col-md-6 text-center"><button style="width:100%" type="button" class="btn btn-warning btn-sm">Edit</button></div><div class="col-md-6 text-center"><button style="width:100%" type="button" class="btn btn-danger btn-sm">Delete</button></div></div>
+            <div style="margin-top: 4px" class="row"><div class="col-md-12 text-center"><button style="width:70%" type="button" id="closePopover" class="btn btn-secondary btn-sm">Close</button></div></div>`)
+          .attr('data-trigger', 'manual')
+          .attr('data-placement', 'top')
+          .attr('title', `Major: ${beacon.major} Minor: ${beacon.minor}`)
           .on('mouseover', function() {
             d3.select(this).transition()
                            .duration(300)
-                           .attr("r", "100")
-
-            $(this).tooltip();
-            $(this).tooltip('show');
+                           .attr("r", "100");
 
           })
           .on('mouseout', function () {
             d3.select(this).transition()
                            .duration(300)
                            .attr("r", "50");
+          })
+          .on('click', function() {
+            $(this).popover('show');
+            $('#closePopover').click(() => {
+              $('[data-toggle="popover"]').popover('hide');
+            });
           })
           .style("fill", 'rgb(88, 91, 96)')
           .style("fill-opacity", "0.6")
@@ -327,11 +337,11 @@ function inverseMapY(svgY) {
   return (svgY - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
-function setBeacon(x,y, mobile) {
+function setBeacon(beacon, mobile) {
   if (mobile) {
-    renderBeacon(mapX(x), mapY(y), x, y);
+    renderBeacon(mapX(beacon.x), mapY(beacon.y), beacon);
   } else {
-    const newX = mapX(parseFloat(d3.select('svg').attr('data-width'), 10)) - mapX(x);
-    renderBeacon(mapY(y), newX, x, y);
+    const newX = mapX(parseFloat(d3.select('svg').attr('data-width'), 10)) - mapX(beacon.x);
+    renderBeacon(mapY(beacon.y), newX, beacon);
   }
 }
