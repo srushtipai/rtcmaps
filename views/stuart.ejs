@@ -8,7 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="/stylesheets/maps.css">
-    
+
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/meny/1.4.0/meny.min.js"></script>
@@ -24,9 +24,30 @@
     <h3>Advanced</h3>
     <ul>
       <li>
-        <label for='toggle-2' style='margin-right: 4px;'>Mock Beacons</label>
+        <label class='alignLeft' for='toggle-2'>Mock Beacons</label>
         <input class='sw' id='toggle-2' name='toggle' type='checkbox'>
-        <label for='toggle-2'>
+        <label class='alignRight' for='toggle-2'>
+          <span></span>
+        </label>
+      </li>
+      <li>
+        <label class='alignLeft' for='addmode'>Add Beacon</label>
+        <input class='sw' id='addmode' name='toggle' type='checkbox'>
+        <label class='alignRight' for='addmode'>
+          <span></span>
+        </label>
+      </li>
+      <li>
+        <label class='alignLeft' for='addmode'>Add GateWay</label>
+        <input class='sw' id='addgateway' name='toggle' type='checkbox'>
+        <label class='alignRight' for='addgateway'>
+          <span></span>
+        </label>
+      </li>
+      <li>
+        <label class='alignLeft' for='addmode'>Edit Devices</label>
+        <input class='sw' id='editDevice' name='toggle' type='checkbox'>
+        <label class='alignRight' for='editDevice'>
           <span></span>
         </label>
       </li>
@@ -42,6 +63,14 @@
         <span class='navbar-toggler-icon'></span>
       </button>
       <div class='collapse navbar-collapse' id='navbarSupportedContent'>
+        <ul class='navbar-nav mr-auto'>
+          <li class='nav-item active'>
+          </li>
+        </ul>
+        <select id='building' style='width: 27%;'>
+          <option>Alumini</option>
+          <option selected='true'>Stuart</option>
+        </select>
         <ul class='navbar-nav mr-auto'>
           <li class='nav-item active'>
           </li>

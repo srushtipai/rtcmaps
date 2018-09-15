@@ -2,6 +2,7 @@
 
 $(document).ready(function() {
   $('#floor').select2();
+  $('#building').select2();
   customStyles();
 
   var meny = Meny.create({
@@ -23,31 +24,77 @@ $(document).ready(function() {
   const mobile = $(window).width() <= 500;
   renderSVG(mobile, $('#floor').select2('data')[0].text, true);
 
-  $('#toggle-2').change(function () {
+  //
+  $('#showBeacons').change(function () {
     if ($(this).is(':checked')) {
-      renderMockBeacons(mobile);
+      renderBeacons(mobile);
+    } else {
+      d3.selectAll('circle').remove();
+    }
+  });
+
+  $('#showGateways').change(function () {
+    if ($(this).is(':checked')) {
+      console.log('Showing gateways');
     } else {
       d3.selectAll('circle').remove();
     }
   });
 
   $('#addmode').change(function () {
-    if ($(this).is(':checked')) {
+    $('#addgateway').prop('checked', false);
+    if ($('#addmode').prop('checked') == true) {
+      d3.select('svg').on("click", function () {
+        // This function will run when someone clicks on map when add mode is activated
+          let coordinates = d3.mouse(this);
+          let position = realPosition(coordinates[0], coordinates[1], mobile);
+          renderBeacon(coordinates[0], coordinates[1], position.x, position.y);
+          $('#beaconForm').modal('show');
+          $('#beaconForm #xValue').val(position.x);
+          $('#beaconForm #yValue').val(position.y);
+      });
+    } else {
+      d3.select('svg').on('click', null);
+    }
+  });
+
+  $('#addgateway').change(function () {
+    $('#addmode').prop('checked', false);
+    if ($('#addgateway').prop('checked') == true) {
       d3.select('svg').on("click", function () {
         // This function will run when someone clicks on map when add mode is activated
         let coordinates = d3.mouse(this);
         let position = realPosition(coordinates[0], coordinates[1], mobile);
-        renderBeacon(coordinates[0], coordinates[1], position.x, position.y);
+        renderGateway(coordinates[0], coordinates[1], position.x, position.y);
+        $('#gatewayForm').modal('show');
+        $('#gatewayForm #xValue').val(position.x);
+        $('#gatewayForm #yValue').val(position.y);
       });
+    } else {
+        d3.select('svg').on('click', null);
     }
   });
 
   $('#floor').on('select2:select', function (e) {
+    $('#addmode').prop('checked', false);
+    $('#addgateway').prop('checked', false);
     var data = e.params.data;
     renderSVG(mobile, data.text, false);
   });
-});
 
+  $('#building').on('select2:select', function (e) {
+    $('#addmode').prop('checked', false);
+    $('#addgateway').prop('checked', false);
+    //alert($('#addgateway').val());
+    var data2 = e.params.data;
+    if (data2.text === 'Stuart') {
+      window.location.href = '/stuart';
+    } else if (data2.text === 'Alumini') {
+      window.location.href = '/alumini';
+    }
+    renderSVG(mobile, data2.text, false);
+  });
+});
 //returns real life x and y from locked origin in meters
 
 function realPosition(svgX, svgY, mobile) {
@@ -74,40 +121,36 @@ function getRandomNumber(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-function renderMockBeacons(mobile) {
-  const viewBox = d3.select('svg').attr('viewBox').split(" ");
-  const width = parseInt(viewBox[2], 10) - 200;
-  const height = parseInt(viewBox[3], 10) - 200;
-  let i;
-  let x;
-  let y;
-  let tempPosition;
-  for (i = 0; i < 10; i++) {
-    x = getRandomNumber(200, width);
-    y = getRandomNumber(100, height);
-    tempPosition = realPosition(x, y, mobile);
-    renderBeacon(getRandomNumber(200, width), getRandomNumber(100, height), tempPosition.x, tempPosition.y);
-  }
-  const dragHandler = d3.drag()
-      .on("drag", function () {
-        d3.select(this)
-            .selectAll('circle')
-            .attr("cx", d3.event.x)
-            .attr("cy", d3.event.y);
-      })
-      .on('end', function() {
-        // this function runs after the user drops the beacon to its new position
-          const position = realPosition(d3.event.x, d3.event.y, mobile);
-          d3.select(this).select('.mainCircle')
-              .attr('fill', 'red')
-              .attr('data-original-title', `x: ${Number((position.x).toFixed(2))} y: ${Number((position.y).toFixed(2))}`);
-      });
+function renderBeacons(mobile) {
+  let buildingFloor = $('#floor').select2('data')[0].text.split('-');
+  $.get(`https://api.iitrtclab.com/beacons/${buildingFloor[0]}/${buildingFloor[1]}`, (beacons) => {
+    beacons.forEach((beacon) => {
+      setBeacon(beacon.x, beacon.y, mobile);
+    });
 
-  dragHandler(d3.selectAll(".beacons"));
+    const dragHandler = d3.drag()
+        .on("drag", function () {
+          d3.select(this)
+              .selectAll('circle')
+              .attr("cx", d3.event.x)
+              .attr("cy", d3.event.y);
+          })
+        .on('end', function() {
+          // this function runs after the user drops the beacon to its new position
+            const position = realPosition(d3.event.x, d3.event.y, mobile);
+            d3.select(this).select('.mainCircle')
+                .attr('fill', 'red')
+                .attr('data-original-title', `x: ${Number((position.x).toFixed(2))} y: ${Number((position.y).toFixed(2))}`);
+          });
+
+      dragHandler(d3.selectAll(".beacons"));
+  });
 }
 
 function renderBeacon (x, y, realX, realY) {
+
   var group = d3.select('svg').append('g').attr('class', 'beacons');
+
 
   group.append('circle')
           .attr("cx", x)
@@ -128,6 +171,7 @@ function renderBeacon (x, y, realX, realY) {
 
             $(this).tooltip();
             $(this).tooltip('show');
+
           })
           .on('mouseout', function () {
             d3.select(this).transition()
@@ -142,8 +186,49 @@ function renderBeacon (x, y, realX, realY) {
           .transition()
           .duration(300)
           .attr("r", 50)
-          .attr("transform", "rotate(180deg)");
-  }
+          .attr("transform", "rotate(180deg)")
+}
+
+  function renderGateway (x, y, realX, realY) {
+    var group = d3.select('svg').append('g').attr('class', 'beacons');
+
+    group.append('circle')
+            .attr("cx", x)
+            .attr("cy", y)
+            .attr("r", 15);
+
+    group.append('circle')
+            .attr('class', 'mainCircle')
+            .attr("cx", x)
+            .attr("cy", y)
+            .attr("r", 0)
+            .attr("data-toggle", "tooltip")
+            .attr("title", `x: ${Number((realX).toFixed(2))} y: ${Number((realY).toFixed(2))}`)
+
+            .on('mouseover', function() {
+              d3.select(this).transition()
+                             .duration(300)
+                             .attr("r", "100")
+
+              $(this).tooltip();
+              $(this).tooltip('show');
+            })
+
+            .on('mouseout', function () {
+              d3.select(this).transition()
+                             .duration(300)
+                             .attr("r", "50");
+            })
+            .style("fill", 'rgb(255, 0, 0)')
+            .style("fill-opacity", "0.6")
+            .style("stroke", "black")
+            .style("stroke-dasharray", "80, 50")
+            .style("stroke-width", "8")
+            .transition()
+            .duration(300)
+            .attr("r", 50)
+            .attr("transform", "rotate(180deg)");
+    }
 
 
 function renderSVG (mobile, svgName, initialRender) {
@@ -158,7 +243,7 @@ function renderSVG (mobile, svgName, initialRender) {
       const svg = d3.select('svg');
       svg.attr('width', '100%');
       svg.attr('height', !mobile ? '87vh' : '100%');
-      
+
       if (!initialRender) {
         $('.alert').remove();
       }
@@ -244,9 +329,9 @@ function inverseMapY(svgY) {
 
 function setBeacon(x,y, mobile) {
   if (mobile) {
-    setLocation(mapX(x), mapY(y), 100);
+    renderBeacon(mapX(x), mapY(y), x, y);
   } else {
     const newX = mapX(parseFloat(d3.select('svg').attr('data-width'), 10)) - mapX(x);
-    setLocation(mapY(y), newX, 100);
+    renderBeacon(mapY(y), newX, x, y);
   }
 }
