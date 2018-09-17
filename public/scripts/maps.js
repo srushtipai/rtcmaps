@@ -41,14 +41,14 @@ $(document).ready(function() {
     }
   });
 
-  $('#addmode').change(function () {
+  $('#addbeacon').change(function () {
     $('#addgateway').prop('checked', false);
-    if ($('#addmode').prop('checked') == true) {
+    if ($('#addbeacon').prop('checked') == true) {
       d3.select('svg').on("click", function () {
         // This function will run when someone clicks on map when add mode is activated
           let coordinates = d3.mouse(this);
           let position = realPosition(coordinates[0], coordinates[1], mobile);
-          renderBeacon(coordinates[0], coordinates[1], position.x, position.y);
+          renderTemporaryBeacon(coordinates[0], coordinates[1]);
           $('#beaconForm').modal('show');
           $('#beaconForm #xValue').val(position.x);
           $('#beaconForm #yValue').val(position.y);
@@ -59,7 +59,7 @@ $(document).ready(function() {
   });
 
   $('#addgateway').change(function () {
-    $('#addmode').prop('checked', false);
+    $('#addbeacon').prop('checked', false);
     if ($('#addgateway').prop('checked') == true) {
       d3.select('svg').on("click", function () {
         // This function will run when someone clicks on map when add mode is activated
@@ -76,14 +76,14 @@ $(document).ready(function() {
   });
 
   $('#floor').on('select2:select', function (e) {
-    $('#addmode').prop('checked', false);
+    $('#addbeacon').prop('checked', false);
     $('#addgateway').prop('checked', false);
     var data = e.params.data;
     renderSVG(mobile, data.text, false);
   });
 
   $('#building').on('select2:select', function (e) {
-    $('#addmode').prop('checked', false);
+    $('#addbeacon').prop('checked', false);
     $('#addgateway').prop('checked', false);
     //alert($('#addgateway').val());
     var data2 = e.params.data;
@@ -150,7 +150,6 @@ function renderBeacons(mobile) {
 function renderBeacon (x, y, beacon) {
 
   var group = d3.select('svg').append('g').attr('class', 'beacons');
-//<button type="button" class="btn btn-primary btn-sm">Small button</button>
 
   group.append('circle')
           .attr("cx", x)
@@ -197,7 +196,43 @@ function renderBeacon (x, y, beacon) {
           .duration(300)
           .attr("r", 50)
           .attr("transform", "rotate(180deg)")
-}
+  }
+
+function renderTemporaryBeacon (x, y) {
+
+    var group = d3.select('svg').append('g').attr('class', 'beacons');
+
+    group.append('circle')
+        .attr("cx", x)
+        .attr("cy", y)
+        .attr("r", 15);
+
+    group.append('circle')
+        .attr('class', 'mainCircle')
+        .attr("cx", x)
+        .attr("cy", y)
+        .attr("r", 0)
+        .on('mouseover', function () {
+            d3.select(this).transition()
+                .duration(300)
+                .attr("r", "100");
+
+        })
+        .on('mouseout', function () {
+            d3.select(this).transition()
+                .duration(300)
+                .attr("r", "50");
+        })
+        .style("fill", 'rgb(88, 91, 96)')
+        .style("fill-opacity", "0.6")
+        .style("stroke", "black")
+        .style("stroke-dasharray", "80, 50")
+        .style("stroke-width", "8")
+        .transition()
+        .duration(300)
+        .attr("r", 50)
+        .attr("transform", "rotate(180deg)")
+    }
 
   function renderGateway (x, y, realX, realY) {
     var group = d3.select('svg').append('g').attr('class', 'beacons');
