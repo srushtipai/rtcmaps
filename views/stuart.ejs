@@ -24,30 +24,30 @@
     <h3>Advanced</h3>
     <ul>
       <li>
-        <label class='alignLeft' for='toggle-2'>Mock Beacons</label>
-        <input class='sw' id='toggle-2' name='toggle' type='checkbox'>
-        <label class='alignRight' for='toggle-2'>
+        <label class='alignLeft' for='showBeacons'>Show Beacons</label>
+        <input class='sw' id='showBeacons' name='toggle' type='checkbox'>
+        <label class='alignRight' for='showBeacons'>
           <span></span>
         </label>
       </li>
       <li>
-        <label class='alignLeft' for='addmode'>Add Beacon</label>
-        <input class='sw' id='addmode' name='toggle' type='checkbox'>
-        <label class='alignRight' for='addmode'>
+        <label class='alignLeft' for='showGateways'>Show Gateways</label>
+        <input class='sw' id='showGateways' name='toggle' type='checkbox'>
+        <label class='alignRight' for='showGateways'>
           <span></span>
         </label>
       </li>
       <li>
-        <label class='alignLeft' for='addmode'>Add GateWay</label>
+        <label class='alignLeft' for='addbeacon'>Add Beacon</label>
+        <input class='sw' id='addbeacon' name='toggle' type='checkbox'>
+        <label class='alignRight' for='addbeacon'>
+          <span></span>
+        </label>
+      </li>
+      <li>
+        <label class='alignLeft' for='addgateway'>Add GateWay</label>
         <input class='sw' id='addgateway' name='toggle' type='checkbox'>
         <label class='alignRight' for='addgateway'>
-          <span></span>
-        </label>
-      </li>
-      <li>
-        <label class='alignLeft' for='addmode'>Edit Devices</label>
-        <input class='sw' id='editDevice' name='toggle' type='checkbox'>
-        <label class='alignRight' for='editDevice'>
           <span></span>
         </label>
       </li>
@@ -84,6 +84,96 @@
     </div>
   </nav>
   <div class='svgContainer'></div>
+</div>
+
+<div class="modal fade" id="beaconForm" tabindex="-1" role="dialog" aria-labelledby="beaconFormLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form>
+        <div class="modal-header">
+          <h5 class="modal-title" id="beaconFormLabel">Register Beacon</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="major">Major</label>
+              <input type="text" class="form-control" id="major" placeholder="Major" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="minor">Minor</label>
+              <input type="text" class="form-control" id="minor" placeholder="Minor" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="macAddress">MAC Address</label>
+            <input type="text" class="form-control" id="macAddress" placeholder="MAC Address" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="xValue"><strong>Relative X</strong></label>
+              <input type="text" class="form-control" id="xValue" disabled>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="yValue"><strong>Relative Y</strong></label>
+              <input type="text" class="form-control" id="yValue" disabled>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="gatewayForm" tabindex="-1" role="dialog" aria-labelledby="gatewayFormLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form>
+        <div class="modal-header">
+          <h5 class="modal-title" id="gatewayFormLabel">Register Gateway</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="major">Major</label>
+              <input type="text" class="form-control" id="major" placeholder="Major" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="minor">Minor</label>
+              <input type="text" class="form-control" id="minor" placeholder="Minor" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="gatewayId">Gateway ID</label>
+            <input type="text" class="form-control" id="gatewayId" placeholder="Gateway ID" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="xValue"><strong>Relative X</strong></label>
+              <input type="text" class="form-control" id="xValue" disabled>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="yValue"><strong>Relative Y</strong></label>
+              <input type="text" class="form-control" id="yValue" disabled>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 
 </body>

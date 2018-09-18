@@ -55,7 +55,6 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  console.log(req.session.requestedPath);
   if (req.body.userid !== process.env.ADMINU || req.body.password !== process.env.ADMINP) {
     req.flash('error', 'Incorrect Password');
     res.redirect('/login');
