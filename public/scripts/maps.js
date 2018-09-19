@@ -10,8 +10,6 @@ $(document).ready(function() {
               type: 'category',
               source: newBeacons
           })
-      ;
-    console.log(newBeacons);
   });
 
   var meny = Meny.create({
