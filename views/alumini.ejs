@@ -7,12 +7,14 @@
     <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css">
     <link rel="stylesheet" href="/stylesheets/maps.css">
 
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/meny/1.4.0/meny.min.js"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.js"></script>
 
     <title>RTC Maps</title>
   </head>
@@ -30,26 +32,35 @@
           <span></span>
         </label>
       </li>
-      <li>
+      <li style="margin-top: 30px">
         <label class='alignLeft' for='showGateways'>Show Gateways</label>
         <input class='sw' id='showGateways' name='toggle' type='checkbox'>
         <label class='alignRight' for='showGateways'>
           <span></span>
         </label>
       </li>
-      <li>
+      <li style="margin-top: 30px">
         <label class='alignLeft' for='addbeacon'>Add Beacon</label>
         <input class='sw' id='addbeacon' name='toggle' type='checkbox'>
         <label class='alignRight' for='addbeacon'>
           <span></span>
         </label>
       </li>
-      <li>
+      <li style="margin-top: 30px">
         <label class='alignLeft' for='addgateway'>Add GateWay</label>
         <input class='sw' id='addgateway' name='toggle' type='checkbox'>
         <label class='alignRight' for='addgateway'>
           <span></span>
         </label>
+      </li>
+      <li style="margin-top: 40px">
+        <div class="ui category search">
+          <div class="ui icon input">
+            <input class="prompt" type="text" placeholder="Search device">
+            <i class="search icon"></i>
+          </div>
+          <div class="results"></div>
+        </div>
       </li>
     </ul>
   </div>
@@ -80,14 +91,6 @@
           <option selected='true' value='1'>AM-01</option>
           <option value='2'>AM-02</option>
         </select>
-        <ul class='navbar-nav mr-auto'>
-          <li class='nav-item active'>
-          </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
       </div>
     </div>
   </nav>
