@@ -9,7 +9,7 @@ $(document).ready(function() {
           .search({
               type: 'category',
               source: newBeacons
-          })
+          });
   });
 
   var meny = Meny.create({
