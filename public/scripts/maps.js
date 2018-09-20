@@ -94,6 +94,23 @@ $(document).ready(function() {
     }
     renderSVG(mobile, data2.text, false);
   });
+
+  $( "#registerBeacon" ).submit(function( event ) {
+    console.log($('#major').val());
+    console.log($('#minor').val());
+    console.log($('#bType').val());
+    console.log($('#macAddress').val());
+    console.log($('#xValue').val());
+    console.log($('#yValue').val());
+
+/*
+    var i;
+    for (i=0; i < $('#registerBeacon').length ; i++){
+      alert($('#registerBeacon')[i].val());
+    }
+*/
+    event.preventDefault();
+  });
 });
 //returns real life x and y from locked origin in meters
 
@@ -216,6 +233,7 @@ function renderTemporaryBeacon (x, y) {
             d3.select(this).transition()
                 .duration(300)
                 .attr("r", "100");
+
 
         })
         .on('mouseout', function () {
