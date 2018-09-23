@@ -52,6 +52,8 @@ $(document).ready(function() {
           $('#beaconForm').modal('show');
           $('#beaconForm #xValue').val(position.x);
           $('#beaconForm #yValue').val(position.y);
+          $('#beaconForm #building_id').val($('#building').val());
+          $('#beaconForm #floor_id').val($('#floor').val());
       });
     } else {
       d3.select('svg').on('click', null);
@@ -96,22 +98,21 @@ $(document).ready(function() {
   });
 
   $( "#registerBeacon" ).submit(function( event ) {
-    console.log($('#major').val());
-    console.log($('#minor').val());
-    console.log($('#bType').val());
-    console.log($('#macAddress').val());
-    console.log($('#xValue').val());
-    console.log($('#yValue').val());
+    console.log($( this ).serializeArray());
+    var formData = parseToJason($( this ).serializeArray());
+    console.log(formData);
 
-/*
-    var i;
-    for (i=0; i < $('#registerBeacon').length ; i++){
-      alert($('#registerBeacon')[i].val());
-    }
-*/
     event.preventDefault();
   });
 });
+
+function parseToJason(serializeArray){
+  var jsonObj = {};
+  jQuery.map( serializeArray, function( n, i ) {
+     jsonObj[n.name] = n.value;
+   });
+  return jsonObj;
+}
 //returns real life x and y from locked origin in meters
 
 function realPosition(svgX, svgY, mobile) {

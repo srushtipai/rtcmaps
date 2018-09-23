@@ -98,37 +98,45 @@
           </div>
           <div class="modal-body">
               <div class="form-row">
+                <div class="form-group col-md-6 ">
+                  <label for="macAddress">MAC Address</label>
+                  <input type="text" class="form-control" id="macAddress" name="beacon_id" placeholder="MAC Address" pattern="^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$" title="XX:XX:XX:XX:XX" required>
+                </div>
                 <div class="form-group col-md-6">
                   <label for="major">Major</label>
-                  <input type="text" class="form-control" id="major" placeholder="Major" required>
+                  <input type="text" class="form-control" id="major" name="major" placeholder="Major" required>
                 </div>
                 <div class="form-group col-md-6">
                   <label for="minor">Minor</label>
-                  <input type="text" class="form-control" id="minor" placeholder="Minor" required>
+                  <input type="text" class="form-control" id="minor" name="minor" placeholder="Minor" required>
                 </div>
-              </div>
-              <div class="form-group">
-                <label for="bType">Beacon Type</label>
-                <select class="form-control" id="bType">
-                  <option>RUUVI</option>
-                  <option>AXA</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="macAddress">MAC Address</label>
-                <input type="text" class="form-control" id="macAddress" placeholder="MAC Address" pattern="^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$" title="XX:XX:XX:XX:XX" required>
+                <div class="form-group col-md-6">
+                  <label for="bType">Beacon Type</label>
+                  <select class="form-control" id="bType">
+                    <option>RUUVI</option>
+                    <option>AXA</option>
+                  </select>
+                </div>
               </div>
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <label for="xValue"><strong>Relative X</strong></label>
-                  <input type="text" class="form-control" id="xValue" disabled>
+                  <input type="text" class="form-control" id="xValue" name="x" readonly>
                 </div>
                 <div class="form-group col-md-6">
                   <label for="yValue"><strong>Relative Y</strong></label>
-                  <input type="text" class="form-control" id="yValue" disabled>
+                  <input type="text" class="form-control" id="yValue" name="y" readonly>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="buiding_id"><strong>Buliding ID</strong></label>
+                  <input type="text" class="form-control" id="building_id" name="building_id" readonly>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="floor_id"><strong>Floor ID</strong></label>
+                  <input type="text" class="form-control" id="floor_id" name="floor_id" readonly>
                 </div>
               </div>
-          </div>
+            </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary">Submit</button>
