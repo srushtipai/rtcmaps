@@ -140,6 +140,10 @@ ul {
   float: right;
 }
 
+.modal-open {
+  overflow-y: scroll;
+}
+
 input.sw {
   opacity: 0;
   position: absolute;
