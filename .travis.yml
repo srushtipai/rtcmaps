@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+- 6.11.2
+install:
+- npm install
+deploy:
+  provider: heroku
+  api_key:
+    secure: "JpXrU8mOf3lUF/jT+eN9mNvPOd6fiY+vFP+HD6kY5Lb41Azz7u9nLb6P1/pv5K9JD/mp2a1SQ6DXfgtisWQS2u/jr7ILK/CPqUelhFinYFWLfnpXjLejn+3i4l4KwKS+VGyXb9+6UeGT2WcUCTJ156VoZuMGujmK8f1VUxDakoXX81BNVOu9nSXsX6zSAZhDVz2VUIAg23t1z8nGngkRyZap8Gjdu0XA3xs/6uwjJOycxxOWg+ucRfThrYRFADi1gQ5YzLX8laFWBg5tXQZsyb9dCLul4W7LNhUwyTTOdrh/Q84bfKz7HHNcik2+ecDA4K18ZPY9KT94qvDp7GX/ZLzff+jDevSLuM7sF6scDaZzEm3NK9m/fXaKP63aiC2u0M+1GSf1Pcny7LX/ZmgC7tpk291ao3wxdvqWdkFZQSOVPTewNgsXlxfB2wzUeK0kb8QxCGwiIinX/GNY3XN/CbP1k2ntwGnLFuok4e6b6TRbwUvNnIs4E1b2YilVkILLCY63D5ae8hf3FUgT7L5SnPMHyoUmH5qncRkp5XGqyXcRy51d/pF1Xge9BP+JlHEALndgYFSlnICiaWNfCvFsaaxS98sG3izT7+tYDbRcm/OMsyaBor4IhlkIwwOQgOXqb0CXWrqheYKtv/C6+MBTHshhY8i9IFalSAm5R88VWA8="

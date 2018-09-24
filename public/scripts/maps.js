@@ -4,6 +4,13 @@ $(document).ready(function() {
   $('#floor').select2();
   $('#building').select2();
   customStyles();
+  const searchContent = populateSearch((newBeacons) => {
+      $('.ui.search')
+          .search({
+              type: 'category',
+              source: newBeacons
+          });
+  });
 
   var meny = Meny.create({
   	menuElement: document.querySelector( '.meny' ),
@@ -113,8 +120,17 @@ function parseToJSON(serializeArray){
    });
   return jsonObj;
 }
-//returns real life x and y from locked origin in meters
 
+function populateSearch(callback) {
+  $.get('https://api.iitrtclab.com/beacons/', (beacons) => {
+    const newBeacons = beacons.map((beacon) => {
+      return {category: beacon.building_id, title: beacon.beacon_id}
+    });
+    callback(newBeacons);
+  });
+}
+
+//returns real life x and y from locked origin in meters
 function realPosition(svgX, svgY, mobile) {
   let positionObject = {};
   if (mobile) {
