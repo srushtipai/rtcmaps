@@ -59,7 +59,7 @@ $(document).ready(function() {
           $('#beaconForm').modal('show');
           $('#beaconForm #xValue').val(position.x);
           $('#beaconForm #yValue').val(position.y);
-          $('#beaconForm #building_id').val($('#building').val());
+          $('#beaconForm #building_id').val(mapBuildingNameToId($('#building').val()));
           $('#beaconForm #floor_id').val($('#floor').val());
       });
     } else {
@@ -105,9 +105,15 @@ $(document).ready(function() {
   });
 
   $( "#registerBeacon" ).submit(function( event ) {
-    console.log($( this ).serializeArray());
     var formData = parseToJSON($( this ).serializeArray());
-    console.log(formData);
+    $.post('https://api.iitrtclab.com/beacons', formData)
+      .done(function(beacon){
+        window.location.reload(false);
+      })
+      .fail(function(xhr, status, error) {
+        // error handling
+        displayError(error);
+      });
 
     event.preventDefault();
   });
@@ -116,9 +122,23 @@ $(document).ready(function() {
 function parseToJSON(serializeArray){
   var jsonObj = {};
   jQuery.map( serializeArray, function( n, i ) {
-     jsonObj[n.name] = n.value;
+    if (!isNaN(n.value)) {
+      jsonObj[n.name] = Number(n.value);
+    } else {
+      jsonObj[n.name] = n.value;
+    }
    });
   return jsonObj;
+}
+
+function mapBuildingNameToId (buildingName) {
+  if (buildingName === 'Alumini') {
+    return 4;
+  } else if (buildingName === 'Stuart') {
+    return 31;
+  } else {
+    throw Error('Building name not recognized');
+  }
 }
 
 function populateSearch(callback) {
@@ -414,4 +434,9 @@ function setBeacon(beacon, mobile) {
     const newX = mapX(parseFloat(d3.select('svg').attr('data-width'), 10)) - mapX(beacon.x);
     renderBeacon(mapY(beacon.y), newX, beacon);
   }
+}
+
+function displayError(error) {
+  $('.alert').remove();
+  $('nav').after(`<div class="alert alert-danger container" style="margin-top: 25px;" role="alert">Something went wrong: ${error}</div>`);
 }
