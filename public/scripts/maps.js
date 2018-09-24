@@ -59,6 +59,8 @@ $(document).ready(function() {
           $('#beaconForm').modal('show');
           $('#beaconForm #xValue').val(position.x);
           $('#beaconForm #yValue').val(position.y);
+          $('#beaconForm #building_id').val($('#building').val());
+          $('#beaconForm #floor_id').val($('#floor').val());
       });
     } else {
       d3.select('svg').on('click', null);
@@ -101,7 +103,23 @@ $(document).ready(function() {
     }
     renderSVG(mobile, data2.text, false);
   });
+
+  $( "#registerBeacon" ).submit(function( event ) {
+    console.log($( this ).serializeArray());
+    var formData = parseToJSON($( this ).serializeArray());
+    console.log(formData);
+
+    event.preventDefault();
+  });
 });
+
+function parseToJSON(serializeArray){
+  var jsonObj = {};
+  jQuery.map( serializeArray, function( n, i ) {
+     jsonObj[n.name] = n.value;
+   });
+  return jsonObj;
+}
 
 function populateSearch(callback) {
   $.get('https://api.iitrtclab.com/beacons/', (beacons) => {
@@ -232,6 +250,7 @@ function renderTemporaryBeacon (x, y) {
             d3.select(this).transition()
                 .duration(300)
                 .attr("r", "100");
+
 
         })
         .on('mouseout', function () {
