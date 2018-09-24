@@ -99,14 +99,14 @@ $(document).ready(function() {
 
   $( "#registerBeacon" ).submit(function( event ) {
     console.log($( this ).serializeArray());
-    var formData = parseToJason($( this ).serializeArray());
+    var formData = parseToJSON($( this ).serializeArray());
     console.log(formData);
 
     event.preventDefault();
   });
 });
 
-function parseToJason(serializeArray){
+function parseToJSON(serializeArray){
   var jsonObj = {};
   jQuery.map( serializeArray, function( n, i ) {
      jsonObj[n.name] = n.value;
