@@ -39,7 +39,7 @@ ul {
 
 @media only screen and (max-width: 500px) {
   body {
-    height: 100%;
+    height: fit-content;
   }
 
   .svgContainer {
@@ -138,6 +138,10 @@ ul {
 
 .alignRight {
   float: right;
+}
+
+.modal-open {
+  overflow-y: scroll;
 }
 
 input.sw {
