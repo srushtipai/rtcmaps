@@ -3,7 +3,19 @@
 $(document).ready(function() {
   $('#floor').select2();
   $('#building').select2();
+  $('#selectGateway').select2();
+
+  $.get('https://api.iitrtclab.com/deployment/gateway', (data) => {
+    const gateways = data.map(gateway => ({ id: gateway.id, text: gateway.id }));
+      $('#selectGateway').select2({
+        data: gateways,
+        width: '100%',
+        dropdownParent: $("#existingGatewayForm")
+      });
+  });
+
   customStyles();
+
   const searchContent = populateSearch((newBeacons) => {
       $('.ui.search')
           .search({
@@ -31,7 +43,6 @@ $(document).ready(function() {
   const mobile = $(window).width() <= 500;
   renderSVG(mobile, $('#floor').select2('data')[0].text, true);
 
-  //
   $('#showBeacons').change(function () {
     if ($(this).is(':checked')) {
       renderBeacons(mobile);
@@ -48,13 +59,30 @@ $(document).ready(function() {
     }
   });
 
-    $('#moveDevices').change(function () {
+  $('#moveDevices').change(function () {
+    if ($(this).is(':checked')) {
+      updateLocations(mobile);
+    } else {
+      d3.selectAll('.beacons').on('mousedown.drag', null);
+    }
+  });
+
+  $('#addExistingGateway').change(function () {
       if ($(this).is(':checked')) {
-        updateLocations(mobile);
+          d3.select('svg').on("click", function () {
+            // This function will run when someone clicks on map when add mode is activated
+            let coordinates = d3.mouse(this);
+            let position = realPosition(coordinates[0], coordinates[1], mobile);
+            renderTemporaryBeacon(coordinates[0], coordinates[1]);
+            $('#existingGatewayForm').modal('show');
+            $('#existingGatewayForm #xValue').val(position.x);
+            $('#existingGatewayForm #yValue').val(position.y);
+          });
       } else {
-        d3.selectAll('.beacons').on('mousedown.drag', null);
+        d3.select('svg').on('click', null);
+        $('#existingGatewayForm').modal('hide');
       }
-    });
+  });
 
   $('#addbeacon').change(function () {
     $('#addgateway').prop('checked', false);
@@ -213,7 +241,7 @@ function renderBeacons(mobile) {
 
 function renderBeacon (x, y, beacon) {
 
-  var group = d3.select('svg').append('g').attr('class', 'beacons');
+  var group = d3.select('svg').append('g').attr('class', 'beacons').attr('beacon-data', JSON.stringify(beacon));
 
   group.append('circle')
           .attr("cx", x)
