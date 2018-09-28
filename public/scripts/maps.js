@@ -6,7 +6,7 @@ $(document).ready(function() {
   $('#selectGateway').select2();
 
   $.get('https://api.iitrtclab.com/deployment/gateway', (data) => {
-    const gateways = data.map(gateway => ({ id: gateway.id, text: gateway.id }));
+    const gateways = data.map(gateway => ({ id: gateway.id, text: `Major: ${gateway.major} Minor: ${gateway.minor}`}));
       $('#selectGateway').select2({
         data: gateways,
         width: '100%',
