@@ -43,6 +43,12 @@ $(document).ready(function() {
   const mobile = $(window).width() <= 500;
   renderSVG(mobile, $('#floor').select2('data')[0].text, true);
 
+  $('#showBeacons').prop('checked', true);
+  $('#showGateways').prop('checked', true);
+
+  renderBeacons(mobile);
+  renderGateways(mobile);
+
   $('#showBeacons').change(function () {
     if ($(this).is(':checked')) {
       renderBeacons(mobile);
