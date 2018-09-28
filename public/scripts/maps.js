@@ -53,7 +53,7 @@ $(document).ready(function() {
 
   $('#showGateways').change(function () {
     if ($(this).is(':checked')) {
-      console.log('Showing gateways');
+      renderGateways(mobile);
     } else {
       d3.selectAll('circle').remove();
     }
@@ -77,6 +77,8 @@ $(document).ready(function() {
             $('#existingGatewayForm').modal('show');
             $('#existingGatewayForm #xValue').val(position.x);
             $('#existingGatewayForm #yValue').val(position.y);
+            $('#existingGatewayForm #building_id').val(mapBuildingNameToId($('#building').val()));
+            $('#existingGatewayForm #floor_id').val($('#floor').val());
           });
       } else {
         d3.select('svg').on('click', null);
@@ -153,6 +155,21 @@ $(document).ready(function() {
 
     event.preventDefault();
   });
+
+  $("#registerExistingGateway").submit(function( event ) {
+    console.log($(this).serializeArray());
+      const formData = parseToJSON($( this ).serializeArray());
+      console.log(formData);
+    $.post('https://api.iitrtclab.com/gateways/existing', formData)
+        .done((gateway) => {
+          window.location.reload(false);
+        })
+        .fail((xhr, status, error) => {
+          displayError(error);
+        });
+
+      event.preventDefault();
+  });
 });
 
 function updateLocations(mobile) {
@@ -177,7 +194,7 @@ function updateLocations(mobile) {
 function parseToJSON(serializeArray){
   var jsonObj = {};
   jQuery.map( serializeArray, function( n, i ) {
-    if (!isNaN(n.value)) {
+    if (!isNaN(n.value) && n.name !== 'gateway_id') {
       jsonObj[n.name] = Number(n.value);
     } else {
       jsonObj[n.name] = n.value;
@@ -236,6 +253,15 @@ function renderBeacons(mobile) {
     beacons.forEach((beacon) => {
       setBeacon(beacon, mobile);
     });
+  });
+}
+
+function renderGateways(mobile) {
+  let buildingFloor = $('#floor').select2('data')[0].text.split('-');
+  $.get(`https://api.iitrtclab.com/gateways/${buildingFloor[0]}/${buildingFloor[1]}`, (gateways) => {
+      gateways.forEach((gateway) => {
+        setGateway(gateway, mobile);
+      });
   });
 }
 
@@ -327,46 +353,54 @@ function renderTemporaryBeacon (x, y) {
         .attr("transform", "rotate(180deg)")
     }
 
-  function renderGateway (x, y, realX, realY) {
-    var group = d3.select('svg').append('g').attr('class', 'beacons');
+function renderGateway (x, y, gateway) {
+  var group = d3.select('svg').append('g').attr('class', 'gateways').attr('gateway-data', JSON.stringify(gateway));
 
-    group.append('circle')
-            .attr("cx", x)
-            .attr("cy", y)
-            .attr("r", 15);
+  group.append('circle')
+      .attr("cx", x)
+      .attr("cy", y)
+      .attr("r", 15);
 
-    group.append('circle')
-            .attr('class', 'mainCircle')
-            .attr("cx", x)
-            .attr("cy", y)
-            .attr("r", 0)
-            .attr("data-toggle", "tooltip")
-            .attr("title", `x: ${Number((realX).toFixed(2))} y: ${Number((realY).toFixed(2))}`)
-
-            .on('mouseover', function() {
-              d3.select(this).transition()
-                             .duration(300)
-                             .attr("r", "100")
-
-              $(this).tooltip();
-              $(this).tooltip('show');
-            })
-
-            .on('mouseout', function () {
-              d3.select(this).transition()
-                             .duration(300)
-                             .attr("r", "50");
-            })
-            .style("fill", 'rgb(255, 0, 0)')
-            .style("fill-opacity", "0.6")
-            .style("stroke", "black")
-            .style("stroke-dasharray", "80, 50")
-            .style("stroke-width", "8")
-            .transition()
-            .duration(300)
-            .attr("r", 50)
-            .attr("transform", "rotate(180deg)");
-    }
+  group.append('circle')
+      .attr('class', 'mainCircle')
+      .attr("cx", x)
+      .attr("cy", y)
+      .attr("r", 0)
+      .attr('data-toggle', 'popover')
+      .attr('data-html', true)
+      .attr('data-content', `<div class="row"><div class="col-md-12 text-center"><strong>MAC Address:</strong> ${gateway.gateway_id}</div></div>
+        <div style="margin-top: 2px" class="row"><div class="col-md-6 text-center"><strong>x</strong>: ${Number((gateway.x).toFixed(2))}</div><div class="col-md-6 text-center"><strong>y:</strong> ${Number((gateway.y).toFixed(2))}</div></div>
+        <div style="margin-top: 4px" class="row"><div class="col-md-6 text-center"><button style="width:100%" type="button" class="btn btn-warning btn-sm">Edit</button></div><div class="col-md-6 text-center"><button style="width:100%" type="button" class="btn btn-danger btn-sm">Delete</button></div></div>
+        <div style="margin-top: 4px" class="row"><div class="col-md-12 text-center"><button style="width:70%" type="button" id="closePopover" class="btn btn-secondary btn-sm">Close</button></div></div>`)
+      .attr('data-trigger', 'manual')
+      .attr('data-placement', 'top')
+      .attr('title', `Major: ${gateway.major} Minor: ${gateway.minor}`)
+      .on('mouseover', function() {
+          d3.select(this).transition()
+              .duration(300)
+              .attr("r", "100");
+      })
+      .on('mouseout', function () {
+          d3.select(this).transition()
+              .duration(300)
+              .attr("r", "50");
+      })
+      .on('click', function() {
+          $(this).popover('show');
+          $('#closePopover').click(() => {
+              $('[data-toggle="popover"]').popover('hide');
+          });
+      })
+      .style("fill", 'rgb(255, 0, 0)')
+      .style("fill-opacity", "0.6")
+      .style("stroke", "black")
+      .style("stroke-dasharray", "80, 50")
+      .style("stroke-width", "8")
+      .transition()
+      .duration(300)
+      .attr("r", 50)
+      .attr("transform", "rotate(180deg)");
+}
 
 
 function renderSVG (mobile, svgName, initialRender) {
@@ -472,6 +506,15 @@ function setBeacon(beacon, mobile) {
     const newX = mapX(parseFloat(d3.select('svg').attr('data-width'), 10)) - mapX(beacon.x);
     renderBeacon(mapY(beacon.y), newX, beacon);
   }
+}
+
+function setGateway(gateway, mobile) {
+    if (mobile) {
+      renderGateway(mapX(gateway.x), mapY(gateway.y), gateway);
+    } else {
+      const newX = mapX(parseFloat(d3.select('svg').attr('data-width'), 10)) - mapX(gateway.x);
+      renderGateway(mapY(gateway.y), newX, gateway);
+    }
 }
 
 function displayError(error) {
