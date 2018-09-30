@@ -182,6 +182,7 @@ function deleteBeacon(beacon){
   })
   .done(function(msg){
     console.log(beacon+" Deleted:" + msg);
+    d3.select(document.getElementById(beacon)).remove();
   });
 
 
@@ -253,7 +254,7 @@ function renderBeacons(mobile) {
 
 function renderBeacon (x, y, beacon) {
 
-  var group = d3.select('svg').append('g').attr('class', 'beacons').attr('beacon-data', JSON.stringify(beacon));
+  var group = d3.select('svg').append('g').attr('class', 'beacons').attr('id', `${beacon.beacon_id}`).attr('beacon-data', JSON.stringify(beacon));
 
   group.append('circle')
           .attr("cx", x)
