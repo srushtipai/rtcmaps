@@ -163,16 +163,14 @@ $(document).ready(function() {
   });
 
   $("#registerExistingGateway").submit(function( event ) {
-    console.log($(this).serializeArray());
-      const formData = parseToJSON($( this ).serializeArray());
-      console.log(formData);
+    const formData = parseToJSON($( this ).serializeArray());
     $.post('https://api.iitrtclab.com/gateways/existing', formData)
-        .done((gateway) => {
-          window.location.reload(false);
-        })
-        .fail((xhr, status, error) => {
-          displayError(error);
-        });
+      .done((gateway) => {
+        window.location.reload(false);
+      })
+      .fail((xhr, status, error) => {
+        displayError(error);
+      });
 
       event.preventDefault();
   });
@@ -202,6 +200,21 @@ function deleteBeacon(beacon){
     method:"DELETE",
     url:"https://api.iitrtclab.com/deployment/beacon",
     data: { id:beacon }
+  })
+  .done(function(msg){
+    window.location.reload(false);
+  })
+  .fail(function(xhr, status, error) {
+    // error handling
+    displayError(error);
+  });
+}
+
+function deleteGateway(gateway) {
+  $.ajax({
+    method:"DELETE",
+    url:"https://api.iitrtclab.com/gateways",
+    data: {id: gateway}
   })
   .done(function(msg){
     window.location.reload(false);
@@ -392,7 +405,7 @@ function renderGateway (x, y, gateway) {
       .attr('data-html', true)
       .attr('data-content', `<div class="row"><div class="col-md-12 text-center"><strong>MAC Address:</strong> ${gateway.gateway_id}</div></div>
         <div style="margin-top: 2px" class="row"><div class="col-md-6 text-center"><strong>x</strong>: ${Number((gateway.x).toFixed(2))}</div><div class="col-md-6 text-center"><strong>y:</strong> ${Number((gateway.y).toFixed(2))}</div></div>
-        <div style="margin-top: 4px" class="row"><div class="col-md-6 text-center"><button style="width:100%" type="button" class="btn btn-warning btn-sm">Edit</button></div><div class="col-md-6 text-center"><button style="width:100%" type="button" class="btn btn-danger btn-sm">Delete</button></div></div>
+        <div style="margin-top: 4px" class="row"><div class="col-md-6 text-center"><button style="width:100%" type="button" class="btn btn-warning btn-sm">Edit</button></div><div class="col-md-6 text-center"><button style="width:100%" type="button" id="deleteGateway" class="btn btn-danger btn-sm">Delete</button></div></div>
         <div style="margin-top: 4px" class="row"><div class="col-md-12 text-center"><button style="width:70%" type="button" id="addBeaconsToGateways" class="btn btn-primary btn-sm">Add Beacons</button></div></div>
         <div style="margin-top: 4px" class="row"><div class="col-md-12 text-center"><button style="width:70%" type="button" id="closePopover" class="btn btn-secondary btn-sm">Close</button></div></div>`)
       .attr('data-trigger', 'manual')
@@ -411,6 +424,9 @@ function renderGateway (x, y, gateway) {
       .on('click', function() {
         self = this;
         $(this).popover('show');
+        $('#deleteGateway').click(() => {
+          deleteGateway(JSON.parse(d3.select(self.parentNode).attr('gateway-data')).gateway_id);
+        });
         $('#addBeaconsToGateways').click(function () {
           //Store gateway info
           const gatewayInfo = JSON.parse(d3.select(self.parentNode).attr('gateway-data'));
