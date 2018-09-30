@@ -43,17 +43,11 @@ $(document).ready(function() {
   const mobile = $(window).width() <= 500;
   renderSVG(mobile, $('#floor').select2('data')[0].text, true);
 
-  $('#showBeacons').prop('checked', true);
-  $('#showGateways').prop('checked', true);
-
-  renderBeacons(mobile);
-  renderGateways(mobile);
-
   $('#showBeacons').change(function () {
     if ($(this).is(':checked')) {
       renderBeacons(mobile);
     } else {
-      d3.selectAll('circle').remove();
+      d3.selectAll('.beacons').remove();
     }
   });
 
@@ -61,7 +55,7 @@ $(document).ready(function() {
     if ($(this).is(':checked')) {
       renderGateways(mobile);
     } else {
-      d3.selectAll('circle').remove();
+      d3.selectAll('.gateways').remove();
     }
   });
 
@@ -516,6 +510,12 @@ function renderSVG (mobile, svgName, initialRender) {
       const svg = d3.select('svg');
       svg.attr('width', '100%');
       svg.attr('height', !mobile ? '87vh' : '100%');
+
+      $('#showBeacons').prop('checked', true);
+      $('#showGateways').prop('checked', true);
+
+      renderBeacons(mobile);
+      renderGateways(mobile);
 
       if (!initialRender) {
         $('.alert').remove();
