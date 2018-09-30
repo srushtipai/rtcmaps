@@ -204,12 +204,14 @@ function deleteBeacon(beacon){
     data: { id:beacon }
   })
   .done(function(msg){
-    console.log(beacon+" Deleted:" + msg);
-    d3.select(document.getElementById(beacon)).remove();
+    window.location.reload(false);
+  })
+  .fail(function(xhr, status, error) {
+    // error handling
+    displayError(error);
   });
-
-
 }
+
 function parseToJSON(serializeArray){
   var jsonObj = {};
   jQuery.map( serializeArray, function( n, i ) {
@@ -373,6 +375,7 @@ function renderTemporaryBeacon (x, y) {
     }
 
 function renderGateway (x, y, gateway) {
+  let self;
   var group = d3.select('svg').append('g').attr('class', 'gateways').attr('gateway-data', JSON.stringify(gateway));
 
   group.append('circle')
@@ -406,10 +409,72 @@ function renderGateway (x, y, gateway) {
               .attr("r", "50");
       })
       .on('click', function() {
-          $(this).popover('show');
-          $('#closePopover').click(() => {
-              $('[data-toggle="popover"]').popover('hide');
+        self = this;
+        $(this).popover('show');
+        $('#addBeaconsToGateways').click(function () {
+          //Store gateway info
+          const gatewayInfo = JSON.parse(d3.select(self.parentNode).attr('gateway-data'));
+          $(this).after('<div style="margin-top: 4px" class="row"><div class="col-md-12 text-center"><button style="width:70%" type="button" id="stopAddingBeacons" class="btn btn-danger btn-sm">Stop Adding Beacons</button></div></div>');
+          $('#stopAddingBeacons').click(function() {
+            //restore state of beacons and gateways
+            $(this).after('<div style="margin-top: 4px" class="row"><div class="col-md-12 text-center"><button style="width:70%" type="button" id="addBeaconsToGateways" class="btn btn-primary btn-sm">Add Beacons</button></div></div>');
+            $(this).remove();
+            d3.select(self).transition()
+                .duration(300)
+                .attr("r", "50");
+
+            d3.selectAll('.beacons').select('.mainCircle')
+                .on('click', function () {
+                  $(this).popover('show');
+                  $('#closePopover').click(() => {
+                      $('[data-toggle="popover"]').popover('hide');
+                  });
+                })
+                .transition()
+                .duration(300)
+                .attr("r", "50")
+                .style('fill', 'rgb(13, 138, 221)');
           });
+          $(this).remove();
+
+          // logic for adding beacons to gateways
+          d3.select(self).transition()
+              .duration(300)
+              .attr("r", "100");
+
+          d3.selectAll('.beacons').select('.mainCircle')
+              .style('fill', 'rgb(149, 237, 61)')
+              .on('click', function () {
+                // generate beacon and gateway object
+                const beaconInfo = JSON.parse(d3.select(this.parentNode).attr('beacon-data'));
+                d3.select(this).style('fill', 'rgb(98, 3, 198)');
+                console.log({
+                  gateway_id: gatewayInfo.gateway_id,
+                  beacon_id: beaconInfo.beacon_id,
+                });
+              })
+              .transition()
+              .duration(300)
+              .attr("r", "100");
+        });
+        $('#closePopover').click(() => {
+            $('[data-toggle="popover"]').popover('hide');
+            d3.select(self).transition()
+                .duration(300)
+                .attr("r", "50");
+
+            d3.selectAll('.beacons').select('.mainCircle')
+                .on('click', function () {
+                    $(this).popover('show');
+                    $('#closePopover').click(() => {
+                        $('[data-toggle="popover"]').popover('hide');
+                    });
+                })
+                .transition()
+                .duration(300)
+                .attr("r", "50")
+                .style('fill', 'rgb(13, 138, 221)');
+        });
       })
       .style("fill", 'rgb(255, 0, 0)')
       .style("fill-opacity", "0.6")
