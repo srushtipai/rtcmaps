@@ -159,6 +159,19 @@ $(document).ready(function() {
     event.preventDefault();
   });
 
+  $( "#registerGateway" ).submit(function( event ) {
+    var formData = parseToJSON($( this ).serializeArray());
+    $.post('https://api.iitrtclab.com/gateways', formData)
+        .done(function(beacon){
+          window.location.reload(false);
+        })
+        .fail(function(xhr, status, error) {
+          // error handling
+            displayError(error);
+        });
+
+    event.preventDefault();
+  });
   $("#registerExistingGateway").submit(function( event ) {
     const formData = parseToJSON($( this ).serializeArray());
     $.post('https://api.iitrtclab.com/gateways/existing', formData)
