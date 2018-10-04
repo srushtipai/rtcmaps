@@ -1,4 +1,4 @@
-/*global $ Meny d3 */
+/*global $ Meny d3 moment */
 
 $(document).ready(function() {
   $('#floor').select2();
@@ -464,6 +464,8 @@ function renderGateway (x, y, gateway, gatewayBeacons) {
       .attr('data-html', true)
       .attr('data-content', `<div class="row"><div class="col-md-12 text-center"><strong>MAC Address:</strong> ${gateway.gateway_id}</div></div>
         <div style="margin-top: 2px" class="row"><div class="col-md-6 text-center"><strong>x</strong>: ${Number((gateway.x).toFixed(2))}</div><div class="col-md-6 text-center"><strong>y:</strong> ${Number((gateway.y).toFixed(2))}</div></div>
+        <div class="row"><div class="col-md-12 text-center"><strong>Battery Level:</strong> ${Number(((gateway.charged/7)*100).toFixed(2))}%</div></div>
+        <div class="row"><div class="col-md-12 text-center"><strong>Last seen:</strong> ${moment(gateway.lastseen).format('MMMM Do YYYY, h:mm:ss a')}</div></div>
         <div class="col-md-12 text-center"><strong>Associated Beacons:</strong></div>
         <div>
           ${gatewayBeacons.map(gatewayBeacon => `<div class="card text-white bg-info" style="margin-top: 7px;">
@@ -478,7 +480,7 @@ function renderGateway (x, y, gateway, gatewayBeacons) {
         <div style="margin-top: 4px" class="row"><div class="col-md-12 text-center"><button style="width:70%" type="button" id="closePopover" class="btn btn-secondary btn-sm">Close</button></div></div>`)
       .attr('data-trigger', 'manual')
       .attr('data-placement', 'top')
-      .attr('title', `Major: ${gateway.major} Minor: ${gateway.minor}`)
+      .attr('title', `Major: ${gateway.major} Minor: ${gateway.minor} <div id="battery${gateway.gateway_id}" class='battery'></div>`)
       .on('mouseover', function() {
           d3.select(this).transition()
               .duration(300)
@@ -492,6 +494,8 @@ function renderGateway (x, y, gateway, gatewayBeacons) {
       .on('click', function() {
         self = this;
         $(this).popover('show');
+        const gatewayInfo = JSON.parse(d3.select(self.parentNode).attr('gateway-data'));
+        setGatewayBatteryLevel(gatewayInfo.gateway_id, gatewayInfo.charged);
         const gatewayBeacons = JSON.parse(d3.select(self.parentNode).attr('gateway-beacons')).map(gatewayBeacon => gatewayBeacon.beacon_id);
         $('#deleteGateway').click(() => {
           deleteGateway(JSON.parse(d3.select(self.parentNode).attr('gateway-data')).gateway_id);
@@ -501,7 +505,6 @@ function renderGateway (x, y, gateway, gatewayBeacons) {
         });
         $('#addBeaconsToGateways').click(function() {
           //Store gateway info
-          const gatewayInfo = JSON.parse(d3.select(self.parentNode).attr('gateway-data'));
           $(this).after('<div style="margin-top: 4px" class="row"><div class="col-md-12 text-center"><button style="width:70%" type="button" id="stopAddingBeacons" class="btn btn-danger btn-sm">Stop Adding Beacons</button></div></div>');
           $('#stopAddingBeacons').click(function() {
             //restore state of beacons and gateways
@@ -703,6 +706,17 @@ function setGateway(gateway, mobile, gatewayBeacons) {
     const newX = mapX(parseFloat(d3.select('svg').attr('data-width'), 10)) - mapX(gateway.x);
     renderGateway(mapY(gateway.y), newX, gateway, gatewayBeacons);
   }
+}
+
+function setGatewayBatteryLevel(gatewayId, charged) {
+  const batteryLevel = convertRange(charged, [0, 7], [0, 1.5]);
+  $(`<style>#battery${gatewayId}:after{height: ${batteryLevel > 1.4 ? 1.4 : batteryLevel}em; margin-top: ${batteryLevel > 1.4 ? 0.1 : 1.5 - batteryLevel}em;}</style>`).appendTo('head');
+  console.log(gatewayId);
+  console.log(charged);
+}
+
+function convertRange( value, r1, r2 ) {
+    return ( value - r1[ 0 ] ) * ( r2[ 1 ] - r2[ 0 ] ) / ( r1[ 1 ] - r1[ 0 ] ) + r2[ 0 ];
 }
 
 function displayError(error) {
