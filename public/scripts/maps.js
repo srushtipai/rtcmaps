@@ -17,11 +17,11 @@ $(document).ready(function() {
   customStyles();
 
   const searchContent = populateSearch((newBeacons) => {
-      $('.ui.search')
-          .search({
-              type: 'category',
-              source: newBeacons
-          });
+    $('.ui.search')
+      .search({
+          type: 'category',
+          source: newBeacons
+      });
   });
 
   var meny = Meny.create({
@@ -219,6 +219,22 @@ function deleteGateway(gateway) {
   });
 }
 
+function deleteGatewayBeacon(beaconId, self) {
+  $.ajax({
+    method:"DELETE",
+    url:"https://api.iitrtclab.com/gatewaybeacon",
+    data: {beacon_id: beaconId}
+  })
+  .done(function(msg){
+    $(self).parent().parent().remove();
+    displaySuccess('Deleted association between beacon and gateway');
+  })
+  .fail(function(xhr, status, error) {
+    // error handling
+    displayError(error);
+  });
+}
+
 function parseToJSON(serializeArray){
   var jsonObj = {};
   jQuery.map( serializeArray, function( n, i ) {
@@ -288,7 +304,14 @@ function renderGateways(mobile) {
   let buildingFloor = $('#floor').select2('data')[0].text.split('-');
   $.get(`https://api.iitrtclab.com/gateways/${buildingFloor[0]}/${buildingFloor[1]}`, (gateways) => {
       gateways.forEach((gateway) => {
-        setGateway(gateway, mobile);
+        $.get('https://api.iitrtclab.com/gatewaybeacon', { gateway_id: gateway.gateway_id })
+          .done((gatewayBeacons) => {
+            setGateway(gateway, mobile, gatewayBeacons);
+          })
+          .fail((err) => {
+            displayError(err);
+            setGateway(gateway, mobile, []);
+          });
       });
   });
 }
@@ -381,9 +404,9 @@ function renderTemporaryBeacon (x, y) {
         .attr("transform", "rotate(180deg)")
     }
 
-function renderGateway (x, y, gateway) {
+function renderGateway (x, y, gateway, gatewayBeacons) {
   let self;
-  var group = d3.select('svg').append('g').attr('class', 'gateways').attr('gateway-data', JSON.stringify(gateway));
+  var group = d3.select('svg').append('g').attr('class', 'gateways').attr('gateway-data', JSON.stringify(gateway)).attr('gateway-beacons', JSON.stringify(gatewayBeacons));
 
   group.append('circle')
       .attr("cx", x)
@@ -399,6 +422,15 @@ function renderGateway (x, y, gateway) {
       .attr('data-html', true)
       .attr('data-content', `<div class="row"><div class="col-md-12 text-center"><strong>MAC Address:</strong> ${gateway.gateway_id}</div></div>
         <div style="margin-top: 2px" class="row"><div class="col-md-6 text-center"><strong>x</strong>: ${Number((gateway.x).toFixed(2))}</div><div class="col-md-6 text-center"><strong>y:</strong> ${Number((gateway.y).toFixed(2))}</div></div>
+        <div class="col-md-12 text-center"><strong>Associated Beacons:</strong></div>
+        <div>
+          ${gatewayBeacons.map(gatewayBeacon => `<div class="card text-white bg-info" style="margin-top: 7px;">
+              <div class="card-body" style="display: flex; justify-content: center; align-items: center; padding: 7px;">
+                <div><h5 style="margin-right: 16px;">${gatewayBeacon.beacon_id}</h5></div>
+                <button data-beacon-id="${gatewayBeacon.beacon_id}" type="button" class="btn btn-danger btn-sm deleteGatewayBeacon">Delete</button>
+              </div>
+            </div>`).join('')}
+        </div>
         <div style="margin-top: 4px" class="row"><div class="col-md-6 text-center"><button style="width:100%" type="button" class="btn btn-warning btn-sm">Edit</button></div><div class="col-md-6 text-center"><button style="width:100%" type="button" id="deleteGateway" class="btn btn-danger btn-sm">Delete</button></div></div>
         <div style="margin-top: 4px" class="row"><div class="col-md-12 text-center"><button style="width:70%" type="button" id="addBeaconsToGateways" class="btn btn-primary btn-sm">Add Beacons</button></div></div>
         <div style="margin-top: 4px" class="row"><div class="col-md-12 text-center"><button style="width:70%" type="button" id="closePopover" class="btn btn-secondary btn-sm">Close</button></div></div>`)
@@ -418,10 +450,14 @@ function renderGateway (x, y, gateway) {
       .on('click', function() {
         self = this;
         $(this).popover('show');
+        const gatewayBeacons = JSON.parse(d3.select(self.parentNode).attr('gateway-beacons')).map(gatewayBeacon => gatewayBeacon.beacon_id);
         $('#deleteGateway').click(() => {
           deleteGateway(JSON.parse(d3.select(self.parentNode).attr('gateway-data')).gateway_id);
         });
-        $('#addBeaconsToGateways').click(function () {
+        $('.deleteGatewayBeacon').click(function() {
+          deleteGatewayBeacon($(this).attr('data-beacon-id'), this);
+        });
+        $('#addBeaconsToGateways').click(function() {
           //Store gateway info
           const gatewayInfo = JSON.parse(d3.select(self.parentNode).attr('gateway-data'));
           $(this).after('<div style="margin-top: 4px" class="row"><div class="col-md-12 text-center"><button style="width:70%" type="button" id="stopAddingBeacons" class="btn btn-danger btn-sm">Stop Adding Beacons</button></div></div>');
@@ -452,20 +488,29 @@ function renderGateway (x, y, gateway) {
               .duration(300)
               .attr("r", "100");
 
-          d3.selectAll('.beacons').select('.mainCircle')
-              .style('fill', 'rgb(149, 237, 61)')
-              .on('click', function () {
-                // generate beacon and gateway object
-                const beaconInfo = JSON.parse(d3.select(this.parentNode).attr('beacon-data'));
-                d3.select(this).style('fill', 'rgb(98, 3, 198)');
-                console.log({
-                  gateway_id: gatewayInfo.gateway_id,
-                  beacon_id: beaconInfo.beacon_id,
-                });
-              })
-              .transition()
-              .duration(300)
-              .attr("r", "100");
+          d3.selectAll('.beacons').each(function(d,i) {
+            if($.inArray(d3.select(this).attr('id'), gatewayBeacons) === -1) {
+              d3.select(this).select('.mainCircle').style('fill', 'rgb(149, 237, 61)')
+                .on('click', function () {
+                  // generate beacon and gateway object
+                  const beaconInfo = JSON.parse(d3.select(this.parentNode).attr('beacon-data'));
+                  $.post('https://api.iitrtclab.com/gatewaybeacon', {
+                    gateway_id: gatewayInfo.gateway_id,
+                    beacon_id: beaconInfo.beacon_id,
+                  })
+                  .done(function(beacon){
+                    displaySuccess('Beacon added to gateway')
+                  })
+                  .fail(function(xhr, status, error) {
+                    displayError(error);
+                  });
+                  d3.select(this).style('fill', 'rgb(98, 3, 198)');
+                })
+                .transition()
+                .duration(300)
+                .attr("r", "100");
+            }
+          });
         });
         $('#closePopover').click(() => {
             $('[data-toggle="popover"]').popover('hide');
@@ -609,16 +654,25 @@ function setBeacon(beacon, mobile) {
   }
 }
 
-function setGateway(gateway, mobile) {
-    if (mobile) {
-      renderGateway(mapX(gateway.x), mapY(gateway.y), gateway);
-    } else {
-      const newX = mapX(parseFloat(d3.select('svg').attr('data-width'), 10)) - mapX(gateway.x);
-      renderGateway(mapY(gateway.y), newX, gateway);
-    }
+function setGateway(gateway, mobile, gatewayBeacons) {
+  if (mobile) {
+    renderGateway(mapX(gateway.x), mapY(gateway.y), gateway, gatewayBeacons);
+  } else {
+    const newX = mapX(parseFloat(d3.select('svg').attr('data-width'), 10)) - mapX(gateway.x);
+    renderGateway(mapY(gateway.y), newX, gateway, gatewayBeacons);
+  }
 }
 
 function displayError(error) {
   $('.alert').remove();
-  $('nav').after(`<div class="alert alert-danger container" style="margin-top: 25px;" role="alert">Something went wrong: ${error}</div>`);
+  $('nav').after(`<div class="alert alert-danger container" style="margin-top: 25px;" role="alert">Something went wrong: ${error}<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button></div>`);
+}
+
+function displaySuccess(success) {
+  $('.alert').remove();
+  $('nav').after(`<div class="alert alert-success container" style="margin-top: 25px;" role="alert">${success}<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button></div>`);
 }
