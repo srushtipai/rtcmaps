@@ -14,6 +14,15 @@ $(document).ready(function() {
       });
   });
 
+  $.get('https://api.iitrtclab.com/deployment/beacon', (data) => {
+      const beacons = data.map(beacon => ({ id: beacon.id, text: `Major: ${beacon.major} Minor: ${beacon.minor}`}));
+      $('#selectBeacon').select2({
+          data: beacons,
+          width: '100%',
+          dropdownParent: $("#existingBeaconForm")
+      });
+  });
+
   customStyles();
 
   const searchContent = populateSearch((newBeacons) => {
@@ -84,6 +93,25 @@ $(document).ready(function() {
         d3.select('svg').on('click', null);
         $('#existingGatewayForm').modal('hide');
       }
+  });
+
+  $('#addExistingBeacon').change(function () {
+    if ($(this).is(':checked')) {
+      d3.select('svg').on("click", function () {
+          // This function will run when someone clicks on map when add mode is activated
+          let coordinates = d3.mouse(this);
+          let position = realPosition(coordinates[0], coordinates[1], mobile);
+          renderTemporaryBeacon(coordinates[0], coordinates[1]);
+          $('#existingBeaconForm').modal('show');
+          $('#existingBeaconForm #xValue').val(position.x);
+          $('#existingBeaconForm #yValue').val(position.y);
+          $('#existingBeaconForm #building_id').val(mapBuildingNameToId($('#building').val()));
+          $('#existingBeaconForm #floor_id').val($('#floor').val());
+      });
+    } else {
+      d3.select('svg').on('click', null);
+      $('#existingBeaconForm').modal('hide');
+    }
   });
 
   $('#addbeacon').change(function () {
@@ -165,6 +193,20 @@ $(document).ready(function() {
       .fail((xhr, status, error) => {
         displayError(error);
       });
+
+      event.preventDefault();
+  });
+
+  $("#registerExistingBeacon").submit(function( event ) {
+      const formData = parseToJSON($( this ).serializeArray());
+      console.log(formData);
+      $.post('https://api.iitrtclab.com/beacons/existing', formData)
+        .done((beacon) => {
+          window.location.reload(false);
+        })
+        .fail((xhr, status, error) => {
+          displayError(error);
+        });
 
       event.preventDefault();
   });
