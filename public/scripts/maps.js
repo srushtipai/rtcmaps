@@ -199,7 +199,6 @@ $(document).ready(function() {
 
   $("#registerExistingBeacon").submit(function( event ) {
       const formData = parseToJSON($( this ).serializeArray());
-      console.log(formData);
       $.post('https://api.iitrtclab.com/beacons/existing', formData)
         .done((beacon) => {
           window.location.reload(false);
@@ -337,7 +336,14 @@ function renderBeacons(mobile) {
   let buildingFloor = $('#floor').select2('data')[0].text.split('-');
   $.get(`https://api.iitrtclab.com/beacons/${buildingFloor[0]}/${buildingFloor[1]}`, (beacons) => {
     beacons.forEach((beacon) => {
-      setBeacon(beacon, mobile);
+      $.get('https://api.iitrtclab.com/deviceManagement/rssi', {beacon_id: beacon.beacon_id})
+        .done((beaconRssi) => {
+          setBeacon(beacon, mobile, beaconRssi);
+        })
+        .fail((err) => {
+          displayError(err);
+          setBeacon(beacon, mobile, {});
+        });
     });
   });
 }
@@ -358,7 +364,7 @@ function renderGateways(mobile) {
   });
 }
 
-function renderBeacon (x, y, beacon) {
+function renderBeacon (x, y, beacon, beaconRssi) {
 
   var group = d3.select('svg').append('g').attr('class', 'beacons').attr('id', `${beacon.beacon_id}`).attr('beacon-data', JSON.stringify(beacon));
 
@@ -376,6 +382,9 @@ function renderBeacon (x, y, beacon) {
           .attr('data-html', true)
           .attr('data-content', `<div class="row"><div class="col-md-12 text-center"><strong>MAC Address:</strong> ${beacon.beacon_id}</div></div>
             <div style="margin-top: 2px" class="row"><div class="col-md-6 text-center"><strong>x</strong>: ${Number((beacon.x).toFixed(2))}</div><div class="col-md-6 text-center"><strong>y:</strong> ${Number((beacon.y).toFixed(2))}</div></div>
+            <div class="row"><div class="col-md-12 text-center"><strong>Last recorded RSSI:</strong> ${beaconRssi === {} ? 'No information recieved from gateway' : beaconRssi.rssi}</div></div>
+            <div class="row"><div class="col-md-12 text-center"><strong>RSSI recieved at:</strong> ${beaconRssi === {} ? 'No information recieved from gateway' : moment(beaconRssi.timestamp).format('MMMM Do YYYY, h:mm:ss a')}</div></div>
+            <div class="row"><div class="col-md-12 text-center"><strong>Gateway associated with:</strong> ${beaconRssi === {} ? 'No information recieved from gateway' : beaconRssi.gateway_id}</div></div>
             <div style="margin-top: 4px" class="row"><div class="col-md-6 text-center"><button style="width:100%" type="button" class="btn btn-warning btn-sm">Edit</button></div><div class="col-md-6 text-center"><button style="width:100%" type="button" class="btn btn-danger btn-sm" onclick="deleteBeacon('${beacon.beacon_id}')">Delete</button></div></div>
             <div style="margin-top: 4px" class="row"><div class="col-md-12 text-center"><button style="width:70%" type="button" id="closePopover" class="btn btn-secondary btn-sm">Close</button></div></div>`)
           .attr('data-trigger', 'manual')
@@ -690,12 +699,12 @@ function inverseMapY(svgY) {
   return (svgY - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
-function setBeacon(beacon, mobile) {
+function setBeacon(beacon, mobile, beaconRssi) {
   if (mobile) {
-    renderBeacon(mapX(beacon.x), mapY(beacon.y), beacon);
+    renderBeacon(mapX(beacon.x), mapY(beacon.y), beacon, beaconRssi);
   } else {
     const newX = mapX(parseFloat(d3.select('svg').attr('data-width'), 10)) - mapX(beacon.x);
-    renderBeacon(mapY(beacon.y), newX, beacon);
+    renderBeacon(mapY(beacon.y), newX, beacon, beaconRssi);
   }
 }
 
@@ -711,8 +720,6 @@ function setGateway(gateway, mobile, gatewayBeacons) {
 function setGatewayBatteryLevel(gatewayId, charged) {
   const batteryLevel = convertRange(charged, [0, 7], [0, 1.5]);
   $(`<style>#battery${gatewayId}:after{height: ${batteryLevel > 1.4 ? 1.4 : batteryLevel}em; margin-top: ${batteryLevel > 1.4 ? 0.1 : 1.5 - batteryLevel}em;}</style>`).appendTo('head');
-  console.log(gatewayId);
-  console.log(charged);
 }
 
 function convertRange( value, r1, r2 ) {
