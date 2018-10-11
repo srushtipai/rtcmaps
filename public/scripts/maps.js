@@ -135,15 +135,18 @@ $(document).ready(function() {
 
   $('#addgateway').change(function () {
     $('#addbeacon').prop('checked', false);
+
     if ($('#addgateway').prop('checked') == true) {
       d3.select('svg').on("click", function () {
         // This function will run when someone clicks on map when add mode is activated
         let coordinates = d3.mouse(this);
         let position = realPosition(coordinates[0], coordinates[1], mobile);
-        renderGateway(coordinates[0], coordinates[1], position.x, position.y);
+        renderTemporaryGateway(coordinates[0], coordinates[1]);
         $('#gatewayForm').modal('show');
         $('#gatewayForm #xValue').val(position.x);
         $('#gatewayForm #yValue').val(position.y);
+        $('#beaconForm #building_id').val(mapBuildingNameToId($('#building').val()));
+        $('#beaconForm #floor_id').val($('#floor').val());
       });
     } else {
         d3.select('svg').on('click', null);
@@ -167,7 +170,9 @@ $(document).ready(function() {
     } else if (data2.text === 'Alumini') {
       window.location.href = '/alumini';
     }
-    renderSVG(mobile, data2.text, false);
+    else if (data2.text === 'Idea Shop') {
+        window.location.href = '/ideashop';
+    }
   });
 
   $( "#registerBeacon" ).submit(function( event ) {
@@ -184,6 +189,19 @@ $(document).ready(function() {
     event.preventDefault();
   });
 
+  $( "#registerGateway" ).submit(function( event ) {
+    var formData = parseToJSON($( this ).serializeArray());
+    $.post('https://api.iitrtclab.com/gateways', formData)
+        .done(function(beacon){
+          window.location.reload(false);
+        })
+        .fail(function(xhr, status, error) {
+          // error handling
+            displayError(error);
+        });
+
+    event.preventDefault();
+  });
   $("#registerExistingGateway").submit(function( event ) {
     const formData = parseToJSON($( this ).serializeArray());
     $.post('https://api.iitrtclab.com/gateways/existing', formData)
@@ -293,6 +311,8 @@ function mapBuildingNameToId (buildingName) {
     return 4;
   } else if (buildingName === 'Stuart') {
     return 31;
+  } else if (buildingName === 'Idea Shop'){
+    return 64;
   } else {
     throw Error('Building name not recognized');
   }
@@ -595,6 +615,44 @@ function renderGateway (x, y, gateway, gatewayBeacons) {
       .attr("r", 50)
       .attr("transform", "rotate(180deg)");
 }
+
+function renderTemporaryGateway (x, y) {
+
+    var group = d3.select('svg').append('g').attr('class', 'beacons').attr('id', 'temporaryBeacon');
+
+    group.append('circle')
+        .attr("cx", x)
+        .attr("cy", y)
+        .attr("r", 15);
+
+    group.append('circle')
+        .attr('class', 'mainCircle')
+        .attr("cx", x)
+        .attr("cy", y)
+        .attr("r", 0)
+        .on('mouseover', function () {
+            d3.select(this).transition()
+                .duration(300)
+                .attr("r", "100");
+
+
+        })
+        .on('mouseout', function () {
+            d3.select(this).transition()
+                .duration(300)
+                .attr("r", "50");
+        })
+        .style("fill", 'rgb(255, 0, 0)')
+        .style("fill-opacity", "0.6")
+        .style("stroke", "black")
+        .style("stroke-dasharray", "80, 50")
+        .style("stroke-width", "8")
+        .transition()
+        .duration(300)
+        .attr("r", 50)
+        .attr("transform", "rotate(180deg)")
+}
+
 
 
 function renderSVG (mobile, svgName, initialRender) {
