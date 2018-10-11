@@ -170,7 +170,9 @@ $(document).ready(function() {
     } else if (data2.text === 'Alumini') {
       window.location.href = '/alumini';
     }
-    renderSVG(mobile, data2.text, false);
+    else if (data2.text === 'Idea Shop') {
+        window.location.href = '/ideashop';
+    }
   });
 
   $( "#registerBeacon" ).submit(function( event ) {
@@ -309,6 +311,8 @@ function mapBuildingNameToId (buildingName) {
     return 4;
   } else if (buildingName === 'Stuart') {
     return 31;
+  } else if (buildingName === 'Idea Shop'){
+    return 64;
   } else {
     throw Error('Building name not recognized');
   }

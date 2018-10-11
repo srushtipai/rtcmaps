@@ -50,6 +50,16 @@ app.get('/alumini', (req, res) => {
   }
 });
 
+app.get('/ideashop', (req, res) => {
+    req.session.requestedPath = req.originalUrl;
+    if (req.session.userid !== process.env.ADMINU || req.session.password !== process.env.ADMINP) {
+        req.flash('error', 'Please login');
+        res.redirect('/login');
+    } else {
+        res.render('ideashop');
+    }
+});
+
 app.get('/login', (req, res) => {
   res.render('login');
 });

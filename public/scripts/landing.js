@@ -7,6 +7,8 @@ $(document).ready(function() {
       window.location.href = '/stuart';
     } else if (building === 'Alumini Building') {
       window.location.href = '/alumini';
+    } else if (building === 'Idea Shop') {
+      window.location.href = '/ideashop';
     } else {
       $('#inputBuilding').addClass('is-invalid');
     }
