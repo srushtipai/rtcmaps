@@ -36,6 +36,9 @@ ul {
 #aluminiSvg, #ideaShopSvg {
   padding: 0 51px;
 }
+#kaplanSvg {
+  padding: 15px 51px;
+}
 
 @media only screen and (max-width: 500px) {
   body {
@@ -48,6 +51,10 @@ ul {
 
   #aluminiSvg {
     padding: 17px 47px;
+  }
+
+  #kaplanSvg{
+    padding: 36px;
   }
 }
 .meny {

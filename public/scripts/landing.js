@@ -9,6 +9,8 @@ $(document).ready(function() {
       window.location.href = '/alumini';
     } else if (building === 'Idea Shop') {
       window.location.href = '/ideashop';
+    } else if (building === 'Kaplan Institute'){
+      window.location.href = '/kaplan'
     } else {
       $('#inputBuilding').addClass('is-invalid');
     }

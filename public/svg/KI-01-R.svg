@@ -10,9 +10,9 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="3520.7007"
-   height="2360.5198"
-   viewBox="0 0 931.51874 624.55212"
+   width="3201.7007"
+   height="1761.5198"
+   viewBox="0 0 847.11667 466.06723"
    version="1.1"
    id="KI-01"
    data-width="46.52886734008789"
@@ -26,9 +26,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.24748737"
-     inkscape:cx="1080.6431"
-     inkscape:cy="913.46297"
+     inkscape:zoom="0.35"
+     inkscape:cx="1590.4536"
+     inkscape:cy="857.12543"
      inkscape:document-units="mm"
      inkscape:current-layer="KI-01"
      showgrid="false"
@@ -44,7 +44,20 @@
      inkscape:measure-start="0,0"
      inkscape:measure-end="0,0" />
   <defs
-     id="defs2" />
+     id="defs2">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath888">
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458335"
+         id="rect890"
+         width="465.28873"
+         height="847.03473"
+         x="67.129715"
+         y="44.850418"
+         transform="rotate(-90)" />
+    </clipPath>
+  </defs>
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -58,9 +71,10 @@
     </rdf:RDF>
   </metadata>
   <g
-     id="g945"
-     transform="rotate(-90,311.95069,312.27974)">
+     id="g959"
+     transform="rotate(-90,233.27825,233.66395)">
     <image
+       clip-path="url(#clipPath888)"
        y="-638.34619"
        x="-18.271706"
        id="image18"
@@ -69,336 +83,336 @@
        preserveAspectRatio="none"
        height="660.13544"
        width="972.34375"
-       transform="rotate(90)" />
+       transform="rotate(90,-10.718317,-55.564528)" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 452.28746,44.850416 v 79.459574 h 80.13097 V 44.850416 Z"
+       d="M 386.00462,0.00420339 V 79.463777 h 80.13097 V 0.00420339 Z"
        id="room-ipro-studio-1"
        inkscape:connector-curvature="0"
-       class="origin-top" />
+       class="originTop" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 376.31426,44.850416 v 79.459574 h 75.9732 V 44.850416 Z"
+       d="M 310.03142,0.00420339 V 79.463777 h 75.9732 V 0.00420339 Z"
        id="room-ipro-studio-2"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 299.96305,44.850416 v 79.459574 h 76.35121 V 44.850416 Z"
+       d="M 233.68021,0.00420339 V 79.463777 h 76.35121 V 0.00420339 Z"
        id="room-ipro-studio-3"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 223.61186,44.850416 v 79.459574 h 76.35119 V 44.850416 Z"
+       d="M 157.32902,0.00420339 V 79.463777 h 76.35119 V 0.00420339 Z"
        id="room-ipro-studio-4"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 147.63865,44.850416 v 79.459574 h 75.97321 V 44.850416 Z"
+       d="M 81.355805,0.00420339 V 79.463777 H 157.32902 V 0.00420339 Z"
        id="room-ipro-studio-5"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 67.129719,44.850416 V 124.30999 H 147.63865 V 44.850416 Z"
+       d="M 0.84687429,0.00420339 V 79.463777 H 81.355805 V 0.00420339 Z"
        id="room-ipro-studio-6"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 452.28746,124.30999 v 76.72917 h 80.13097 v -76.72917 z"
+       d="m 386.00462,79.463777 v 76.729203 h 80.13097 V 79.463777 Z"
        id="room-ipro-studio-7"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 376.31426,124.30999 v 76.72917 h 75.9732 v -76.72917 z"
+       d="m 310.03142,79.463777 v 76.729203 h 75.9732 V 79.463777 Z"
        id="room-ipro-studio-8"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 299.96305,124.30999 v 76.72917 h 76.35121 v -76.72917 z"
+       d="m 233.68021,79.463777 v 76.729203 h 76.35121 V 79.463777 Z"
        id="room-ipro-studio-9"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 223.61186,124.30999 v 76.72917 h 76.35119 v -76.72917 z"
+       d="m 157.32902,79.463777 v 76.729203 h 76.35119 V 79.463777 Z"
        id="room-ipro-studio-10"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 147.63865,124.30999 v 76.72917 h 75.97321 v -76.72917 z"
+       d="M 81.355805,79.463777 V 156.19298 H 157.32902 V 79.463777 Z"
        id="room-ipro-studio-11"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 67.129719,124.30999 v 76.72917 h 80.508931 v -76.72917 z"
+       d="M 0.84687429,79.463777 V 156.19298 H 81.355805 V 79.463777 Z"
        id="room-ipro-studio-12"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 452.28746,201.03916 v 76.72917 h 80.13097 v -76.72917 z"
+       d="m 386.00462,156.19296 v 76.72917 h 80.13097 v -76.72917 z"
        id="room-flex-space-1"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 376.31426,201.03916 v 76.72917 h 75.9732 v -76.72917 z"
+       d="m 310.03142,156.19296 v 76.72917 h 75.9732 v -76.72917 z"
        id="room-mens-bath-elec"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 299.96305,201.03916 v 76.72917 h 76.35121 v -76.72917 z"
+       d="m 233.68021,156.19296 v 76.72917 h 76.35121 v -76.72917 z"
        id="room-ipro-concierge"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 223.61186,201.03916 v 76.72917 h 76.35119 v -76.72917 z"
+       d="m 157.32902,156.19296 v 76.72917 h 76.35119 v -76.72917 z"
        id="room-courtyard-1"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 147.63865,201.03916 v 76.72917 h 75.97321 v -76.72917 z"
+       d="m 81.355805,156.19296 v 76.72917 h 75.973215 v -76.72917 z"
        id="room-courtyard-2"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 67.129719,201.03916 v 76.72917 h 80.508931 v -76.72917 z"
+       d="m 0.84687429,156.19296 v 76.72917 H 81.355805 v -76.72917 z"
        id="room-courtyard-3"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 452.28746,277.76833 v 75.97323 h 80.13097 v -75.97323 z"
+       d="m 386.00462,232.92213 v 75.97323 h 80.13097 v -75.97323 z"
        id="room-flex-space-2"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 376.31426,277.76833 v 75.97323 h 75.9732 v -75.97323 z"
+       d="m 310.03142,232.92213 v 75.97323 h 75.9732 v -75.97323 z"
        id="room-open-space-1"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 299.96305,277.76833 v 75.97323 h 76.35121 v -75.97323 z"
+       d="m 233.68021,232.92213 v 75.97323 h 76.35121 v -75.97323 z"
        id="room-open-space-2"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 223.61186,277.76833 v 75.97323 h 76.35119 v -75.97323 z"
+       d="m 157.32902,232.92213 v 75.97323 h 76.35119 v -75.97323 z"
        id="room-courtyard-4"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 147.63865,277.76833 v 75.97323 h 75.97321 v -75.97323 z"
+       d="m 81.355805,232.92213 v 75.97323 h 75.973215 v -75.97323 z"
        id="room-courtyard-5"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 67.129719,277.76833 v 75.97323 h 80.508931 v -75.97323 z"
+       d="m 0.84687429,232.92213 v 75.97323 H 81.355805 v -75.97323 z"
        id="room-courtyard-6"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 452.28746,353.74156 v 76.72917 h 80.13097 v -76.72917 z"
+       d="m 386.00462,308.89536 v 76.72917 h 80.13097 v -76.72917 z"
        id="room-flex-space-3"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 376.31426,353.74156 v 76.72917 h 75.9732 v -76.72917 z"
+       d="m 310.03142,308.89536 v 76.72917 h 75.9732 v -76.72917 z"
        id="room-open-space-3"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 299.96305,353.74156 v 76.72917 h 76.35121 v -76.72917 z"
+       d="m 233.68021,308.89536 v 76.72917 h 76.35121 v -76.72917 z"
        id="room-open-space-4"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 223.61186,353.74156 v 76.72917 h 76.35119 v -76.72917 z"
+       d="m 157.32902,308.89536 v 76.72917 h 76.35119 v -76.72917 z"
        id="room-courtyard-7"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 147.63865,353.74156 v 76.72917 h 75.97321 v -76.72917 z"
+       d="m 81.355805,308.89536 v 76.72917 h 75.973215 v -76.72917 z"
        id="room-courtyard-8"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 67.129719,353.74156 v 76.72917 h 80.508931 v -76.72917 z"
+       d="m 0.84687429,308.89536 v 76.72917 H 81.355805 v -76.72917 z"
        id="room-courtyard-9"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 452.28746,430.47073 v 76.35118 h 80.13097 v -76.35118 z"
+       d="m 386.00462,385.62453 v 76.35118 h 80.13097 v -76.35118 z"
        id="room-flex-space-4"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 376.31426,430.47073 v 76.35118 h 75.9732 v -76.35118 z"
+       d="m 310.03142,385.62453 v 76.35118 h 75.9732 v -76.35118 z"
        id="room-stairs-ki-dir-storage"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 299.96305,430.47073 v 76.35118 h 76.35121 v -76.35118 z"
+       d="m 233.68021,385.62453 v 76.35118 h 76.35121 v -76.35118 z"
        id="room-stairs-storage"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 223.61186,430.47073 v 76.35118 h 76.35119 v -76.35118 z"
+       d="m 157.32902,385.62453 v 76.35118 h 76.35119 v -76.35118 z"
        id="room-courtyard-doors"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 147.63865,430.47073 v 76.35118 h 75.97321 v -76.35118 z"
+       d="m 81.355805,385.62453 v 76.35118 h 75.973215 v -76.35118 z"
        id="room-mock-up-area-1"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 67.129719,430.47073 v 76.35118 h 80.508931 v -76.35118 z"
+       d="m 0.84687429,385.62453 v 76.35118 H 81.355805 v -76.35118 z"
        id="room-mock-up-area-2"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 452.28746,506.82191 v 75.21726 h 80.13097 v -75.21726 z"
+       d="m 386.00462,461.97571 v 75.21726 h 80.13097 v -75.21726 z"
        id="room-flex-space-5"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 376.31426,506.82191 v 75.21726 h 75.9732 v -75.21726 z"
+       d="m 310.03142,461.97571 v 75.21726 h 75.9732 v -75.21726 z"
        id="room-ki-dir"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 299.96305,506.82191 v 75.21726 h 76.35121 v -75.21726 z"
+       d="m 233.68021,461.97571 v 75.21726 h 76.35121 v -75.21726 z"
        id="room-lobby"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 223.61186,506.82191 v 75.21726 h 76.35119 v -75.21726 z"
+       d="m 157.32902,461.97571 v 75.21726 h 76.35119 v -75.21726 z"
        id="room-hallway-1"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 147.63865,506.82191 v 75.21726 h 75.97321 v -75.21726 z"
+       d="m 81.355805,461.97571 v 75.21726 h 75.973215 v -75.21726 z"
        id="room-stairs-womens-bath-cater"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 67.129719,506.82191 v 75.21726 h 80.508931 v -75.21726 z"
+       d="m 0.84687429,461.97571 v 75.21726 H 81.355805 v -75.21726 z"
        id="room-mock-up-area-3"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 452.28746,582.03917 v 76.72917 h 80.13097 v -76.72917 z"
+       d="m 386.00462,537.19297 v 76.72917 h 80.13097 v -76.72917 z"
        id="room-patio-1"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 376.31426,582.03917 v 76.72917 h 75.9732 v -76.72917 z"
+       d="m 310.03142,537.19297 v 76.72917 h 75.9732 v -76.72917 z"
        id="room-patio-2"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 299.96305,582.03917 v 76.72917 h 76.35121 v -76.72917 z"
+       d="m 233.68021,537.19297 v 76.72917 h 76.35121 v -76.72917 z"
        id="room-patio-3"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 223.61186,582.03917 v 76.72917 h 76.35119 v -76.72917 z"
+       d="m 157.32902,537.19297 v 76.72917 h 76.35119 v -76.72917 z"
        id="room-hallway-2"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 147.63865,582.03917 v 76.72917 h 75.97321 v -76.72917 z"
+       d="m 81.355805,537.19297 v 76.72917 h 75.973215 v -76.72917 z"
        id="room-womens-bath-cater-cafe"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 67.129719,582.03917 v 76.72917 h 80.508931 v -76.72917 z"
+       d="m 0.84687429,537.19297 v 76.72917 H 81.355805 v -76.72917 z"
        id="room-mock-up-area-4"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 452.28746,658.76834 v 75.9732 h 80.13097 v -75.9732 z"
+       d="m 386.00462,613.92214 v 75.9732 h 80.13097 v -75.9732 z"
        id="room-patio-mech-shop-office"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 376.31426,658.76834 v 75.9732 h 75.9732 v -75.9732 z"
+       d="m 310.03142,613.92214 v 75.9732 h 75.9732 v -75.9732 z"
        id="room-patio-stairs"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 299.96305,658.76834 v 75.9732 h 76.35121 v -75.9732 z"
+       d="m 233.68021,613.92214 v 75.9732 h 76.35121 v -75.9732 z"
        id="room-patio-4"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 223.61186,658.76834 v 75.9732 h 76.35119 v -75.9732 z"
+       d="m 157.32902,613.92214 v 75.9732 h 76.35119 v -75.9732 z"
        id="room-hallway-3"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 147.63865,658.76834 v 75.9732 h 75.97321 v -75.9732 z"
+       d="m 81.355805,613.92214 v 75.9732 h 75.973215 v -75.9732 z"
        id="room-mens-bath-cafe-unisex-bath-janitor"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 67.129719,658.76834 v 75.9732 h 80.508931 v -75.9732 z"
+       d="m 0.84687429,613.92214 v 75.9732 H 81.355805 v -75.9732 z"
        id="room-mock-up-area-5"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 452.28746,734.74154 v 75.97323 h 80.13097 v -75.97323 z"
+       d="m 386.00462,689.89534 v 75.97323 h 80.13097 v -75.97323 z"
        id="room-maker-space-1"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 376.31426,734.74154 v 75.97323 h 75.9732 v -75.97323 z"
+       d="m 310.03142,689.89534 v 75.97323 h 75.9732 v -75.97323 z"
        id="room-maker-space-2"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 299.96305,734.74154 v 75.97323 h 76.35121 v -75.97323 z"
+       d="m 233.68021,689.89534 v 75.97323 h 76.35121 v -75.97323 z"
        id="room-cnc-router"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 223.61186,734.74154 v 75.97323 h 76.35119 v -75.97323 z"
+       d="m 157.32902,689.89534 v 75.97323 h 76.35119 v -75.97323 z"
        id="room-hallway-4"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 147.63865,734.74154 v 75.97323 h 75.97321 v -75.97323 z"
+       d="m 81.355805,689.89534 v 75.97323 h 75.973215 v -75.97323 z"
        id="room-mech-elec"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 67.129719,734.74154 v 75.97323 h 80.508931 v -75.97323 z"
+       d="m 0.84687429,689.89534 v 75.97323 H 81.355805 v -75.97323 z"
        id="room-mock-up-area-6"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 452.28746,810.71477 v 81.17038 h 80.13097 v -81.17038 z"
+       d="m 386.00462,765.86857 v 81.17038 h 80.13097 v -81.17038 z"
        id="room-maker-space-3"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 376.31426,810.71477 v 81.17039 h 75.9732 v -81.17039 z"
+       d="m 310.03142,765.86857 v 81.17039 h 75.9732 v -81.17039 z"
        id="room-maker-space-4"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 299.96305,810.71477 v 81.17039 h 76.35121 v -81.17039 z"
+       d="m 233.68021,765.86857 v 81.17039 h 76.35121 v -81.17039 z"
        id="room-shop-store-recycle"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 223.61186,810.71477 v 81.17039 h 76.35119 v -81.17039 z"
+       d="m 157.32902,765.86857 v 81.17039 h 76.35119 v -81.17039 z"
        id="room-lounge"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 147.63865,810.71477 v 81.17039 h 75.97321 v -81.17039 z"
+       d="m 81.355805,765.86857 v 81.17039 h 75.973215 v -81.17039 z"
        id="room-mock-up-area-7"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 67.129719,810.71477 v 81.17039 h 80.508931 v -81.17039 z"
+       d="m 0.84687429,765.86857 v 81.17039 H 81.355805 v -81.17039 z"
        id="room-mock-up-area-8"
        inkscape:connector-curvature="0"
        class="origin" />

@@ -60,6 +60,16 @@ app.get('/ideashop', (req, res) => {
     }
 });
 
+app.get('/kaplan', (req, res) => {
+    req.session.requestedPath = req.originalUrl;
+    if (req.session.userid !== process.env.ADMINU || req.session.password !== process.env.ADMINP) {
+        req.flash('error', 'Please login');
+        res.redirect('/login');
+    } else {
+        res.render('kaplan');
+    }
+});
+
 app.get('/login', (req, res) => {
   res.render('login');
 });

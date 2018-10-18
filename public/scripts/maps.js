@@ -169,11 +169,12 @@ $(document).ready(function() {
       window.location.href = '/stuart';
     } else if (data2.text === 'Alumini') {
       window.location.href = '/alumini';
-    }
-    else if (data2.text === 'Idea Shop') {
+    } else if (data2.text === 'Idea Shop') {
         window.location.href = '/ideashop';
+    } else if (data2.text === 'Kaplan') {
+        window.location.href = '/kaplan'
     }
-  });
+        });
 
   $( "#registerBeacon" ).submit(function( event ) {
     var formData = parseToJSON($( this ).serializeArray());
@@ -313,6 +314,8 @@ function mapBuildingNameToId (buildingName) {
     return 31;
   } else if (buildingName === 'Idea Shop'){
     return 64;
+  } else if (buildingName === 'Kaplan') {
+    return 65;
   } else {
     throw Error('Building name not recognized');
   }
@@ -343,7 +346,7 @@ function realPosition(svgX, svgY, mobile) {
 // Should figure out a way to do this in css
 function customStyles() {
   // Custom styles for stuart maps
-  if (window.location.pathname === '/stuart') {
+  if (window.location.pathname === '/stuart' || window.location.pathname === '/kaplan') {
     $('body').height('100vh');
   }
 }
