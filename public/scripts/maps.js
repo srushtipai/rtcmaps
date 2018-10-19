@@ -167,8 +167,8 @@ $(document).ready(function() {
     var data2 = e.params.data;
     if (data2.text === 'Stuart') {
       window.location.href = '/stuart';
-    } else if (data2.text === 'Alumini') {
-      window.location.href = '/alumini';
+    } else if (data2.text === 'Alumni') {
+      window.location.href = '/alumni';
     } else if (data2.text === 'Idea Shop') {
         window.location.href = '/ideashop';
     } else if (data2.text === 'Kaplan') {
@@ -308,7 +308,7 @@ function parseToJSON(serializeArray){
 }
 
 function mapBuildingNameToId (buildingName) {
-  if (buildingName === 'Alumini') {
+  if (buildingName === 'Alumni') {
     return 4;
   } else if (buildingName === 'Stuart') {
     return 31;

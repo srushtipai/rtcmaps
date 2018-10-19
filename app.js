@@ -40,13 +40,13 @@ app.get('/stuart', (req, res) => {
   }
 });
 
-app.get('/alumini', (req, res) => {
+app.get('/alumni', (req, res) => {
   req.session.requestedPath = req.originalUrl;
   if (req.session.userid !== process.env.ADMINU || req.session.password !== process.env.ADMINP) {
     req.flash('error', 'Please login');
     res.redirect('/login');
   } else {
-    res.render('alumini');
+    res.render('alumni');
   }
 });
 
